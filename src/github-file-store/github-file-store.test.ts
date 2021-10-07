@@ -11,7 +11,7 @@ ut.test("GitHubFileStore.keys()", async () => {
   ut.assert(keys.includes("library.json"))
 })
 
-ut.test("GitHubFileStore.keys()", async () => {
+ut.test("GitHubFileStore.get()", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "libraries/the-little-typer",
   })
