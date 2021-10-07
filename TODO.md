@@ -19,6 +19,8 @@
 
 # test-runner
 
+- merge `@xieyuheng/test-runner` into `enchanter`
+
 # file-generator
 
 - use js template string and `eval`

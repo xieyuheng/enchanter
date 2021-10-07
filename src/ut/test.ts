@@ -11,5 +11,6 @@ export function test(description: string, fn: () => Promise<void>): void {
       const head = ut.colors.red("Fail")
       console.error(`${head}: ${description}`)
       console.error(error)
+      throw error
     })
 }
