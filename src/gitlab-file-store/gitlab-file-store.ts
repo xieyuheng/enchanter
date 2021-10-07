@@ -1,15 +1,15 @@
 import { FileStore } from "../file-store"
-import { Gitlab } from "@gitbeaker/node"
+import type { Gitlab } from "@gitbeaker/browser"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"
+import * as ut from "../ut"
 
 export class GitLabFileStore extends FileStore {
   path: string
   dir: string
 
   host: string
-
-  requester: InstanceType<typeof Gitlab>
+  token?: string
 
   constructor(
     path: string,
@@ -19,14 +19,33 @@ export class GitLabFileStore extends FileStore {
     this.path = path
     this.host = opts.host || "https://gitlab.com"
     this.dir = opts.dir || ""
-    this.requester = new Gitlab({
-      host: this.host,
-      token: opts.token,
-    })
+    this.token = opts.token
+  }
+
+  cacheRequester?: InstanceType<typeof Gitlab>
+
+  async requester(): Promise<InstanceType<typeof Gitlab>> {
+    if (this.cacheRequester) {
+      return this.cacheRequester
+    }
+
+    if (ut.isBrowser()) {
+      const { Gitlab } = await import("@gitbeaker/browser")
+      const requester = new Gitlab({ host: this.host, token: this.token })
+      this.cacheRequester = requester
+      return requester
+    } else {
+      const { Gitlab } = await import("@gitbeaker/node")
+      const requester = new Gitlab({ host: this.host, token: this.token })
+      this.cacheRequester = requester
+      return requester
+    }
   }
 
   async keys(): Promise<Array<string>> {
-    const entries = await this.requester.Repositories.tree(this.path, {
+    const { Repositories } = await this.requester()
+
+    const entries = await Repositories.tree(this.path, {
       path: this.dir,
       recursive: true,
     })
@@ -43,7 +62,9 @@ export class GitLabFileStore extends FileStore {
   }
 
   async get(path: string): Promise<string | undefined> {
-    const fileEntry = await this.requester.RepositoryFiles.show(
+    const { RepositoryFiles } = await this.requester()
+
+    const fileEntry = await RepositoryFiles.show(
       this.path,
       `${this.dir}/${path}`,
       "master"
