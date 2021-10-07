@@ -1,9 +1,9 @@
-import { GitHubFileStore } from "../github-file-store"
+import { GitLabFileStore } from "../gitlab-file-store"
 import ty from "@xieyuheng/ty"
 import * as ut from "../ut"
 
 ut.test("GitHubFileStore.keys()", async () => {
-  const files = new GitHubFileStore("cicada-lang/cicada", {
+  const files = new GitLabFileStore("cicada-lang/cicada", {
     dir: "libraries/the-little-typer",
   })
 
@@ -12,7 +12,7 @@ ut.test("GitHubFileStore.keys()", async () => {
 })
 
 ut.test("GitHubFileStore.get()", async () => {
-  const files = new GitHubFileStore("cicada-lang/cicada", {
+  const files = new GitLabFileStore("cicada-lang/cicada", {
     dir: "libraries/the-little-typer",
   })
 

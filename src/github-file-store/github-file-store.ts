@@ -12,10 +12,10 @@ export class GitHubFileStore extends FileStore {
 
   requester: Octokit
 
-  constructor(path: string, opts: { dir: string; token?: string }) {
+  constructor(path: string, opts: { dir?: string; token?: string }) {
     super()
     this.path = path
-    this.dir = opts.dir
+    this.dir = opts.dir || ""
 
     const [owner, repo] = path.split("/")
     this.owner = owner
