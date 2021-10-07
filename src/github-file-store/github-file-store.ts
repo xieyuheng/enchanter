@@ -16,11 +16,9 @@ export class GitHubFileStore extends FileStore {
     super()
     this.path = path
     this.dir = opts.dir || ""
-
     const [owner, repo] = path.split("/")
     this.owner = owner
     this.repo = repo
-
     this.requester = new Octokit({ auth: opts.token })
   }
 

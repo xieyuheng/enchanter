@@ -1,4 +1,3 @@
-- `gitlab-file-store` -- `keys`
 - `gitlab-file-store` -- `get`
 
 # resource
