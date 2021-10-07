@@ -1,3 +1,7 @@
+# test-runner
+
+- merge `@xieyuheng/test-runner` into `enchanter`
+
 # resource
 
 - `postgres-resource` -- `get`
@@ -13,10 +17,6 @@
 - `mongo-resource` -- `find`
 - `mongo-resource` -- `patch`
 - `mongo-resource` -- `delete`
-
-# test-runner
-
-- merge `@xieyuheng/test-runner` into `enchanter`
 
 # file-generator
 
