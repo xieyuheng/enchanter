@@ -1,6 +1,5 @@
 # store
 
-- `github-file-store` -- keys
 - `github-file-store` -- get
 
 - `gitlab-file-store`
