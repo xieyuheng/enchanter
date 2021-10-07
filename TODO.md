@@ -1,5 +1,3 @@
-- `gitlab-file-store` -- `get`
-
 # resource
 
 - `postgres-resource` -- `get`

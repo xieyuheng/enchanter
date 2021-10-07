@@ -43,7 +43,13 @@ export class GitLabFileStore extends FileStore {
   }
 
   async get(path: string): Promise<string | undefined> {
-    throw new Error("TODO")
+    const fileEntry = await this.requester.RepositoryFiles.show(
+      this.path,
+      `${this.dir}/${path}`,
+      "master"
+    )
+
+    return Base64.decode(fileEntry.content)
   }
 }
 

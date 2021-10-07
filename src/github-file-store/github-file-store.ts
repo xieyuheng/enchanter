@@ -117,8 +117,6 @@ export class GitHubFileStore extends FileStore {
       )
     }
 
-    const text = Base64.decode(content.content)
-
-    return text
+    return Base64.decode(content.content)
   }
 }
