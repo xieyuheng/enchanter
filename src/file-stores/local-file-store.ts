@@ -11,6 +11,10 @@ export class LocalFileStore extends FileStore {
     this.dir = opts.dir
   }
 
+  get root(): string {
+    return Path.resolve(this.dir)
+  }
+
   resolve(path: string): string {
     return Path.resolve(this.dir, path)
   }

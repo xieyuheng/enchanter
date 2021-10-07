@@ -1,6 +1,5 @@
 # store
 
-- `git-file-store`
 - `gitlab-file-store`
 - `github-file-store`
 
@@ -19,3 +18,9 @@
 - `mongo-resource` -- `find`
 - `mongo-resource` -- `patch`
 - `mongo-resource` -- `delete`
+
+# test-runner
+
+# file-generator
+
+- use js template string and `eval`
