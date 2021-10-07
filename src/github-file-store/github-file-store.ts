@@ -1,6 +1,7 @@
 import { FileStore } from "../file-store"
 import { Octokit } from "@octokit/rest"
 import { Base64 } from "js-base64"
+import ty from "@xieyuheng/ty"
 
 export class GitHubFileStore extends FileStore {
   path: string
@@ -23,12 +24,44 @@ export class GitHubFileStore extends FileStore {
     this.requester = new Octokit({ auth: opts.token })
   }
 
-  async keys(): Promise<Array<string>> {
-    const { data: contents } = await this.requester.rest.repos.getContent({
+  private async getContent(path: string) {
+    const { data } = await this.requester.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,
-      path: `${this.dir}`,
+      path,
     })
+
+    return data
+  }
+
+  private async getTree(sha: string, opts?: { recursive?: boolean }) {
+    const {
+      data: { tree, truncated },
+    } = await this.requester.rest.git.getTree({
+      owner: this.owner,
+      repo: this.repo,
+      tree_sha: sha,
+      recursive: opts?.recursive ? "true" : undefined,
+    })
+
+    if (truncated) {
+      console.warn(
+        [
+          `During GitHubFileStore.getTree()`,
+          `The number of items in the tree array exceeded github's maximum limit.`,
+          `  length of return array: ${tree.length}`,
+          `  owner: ${this.owner}`,
+          `  repo: ${this.repo}`,
+          `  sha: ${sha}`,
+        ].join("\n")
+      )
+    }
+
+    return tree
+  }
+
+  async keys(): Promise<Array<string>> {
+    const contents = await this.getContent(`${this.dir}`)
 
     const keys: Array<string> = []
 
@@ -49,15 +82,7 @@ export class GitHubFileStore extends FileStore {
       if (content.type === "file") {
         keys.push(content.name)
       } else if (content.type === "dir") {
-        const {
-          data: { tree },
-        } = await this.requester.rest.git.getTree({
-          owner: this.owner,
-          repo: this.repo,
-          tree_sha: content.sha,
-          recursive: "true",
-        })
-
+        const tree = await this.getTree(content.sha, { recursive: true })
         for (const node of tree) {
           const dir = content.name
           if (node.type === "blob") {
@@ -65,14 +90,37 @@ export class GitHubFileStore extends FileStore {
           }
         }
       } else {
-        console.warn(`I found unhandled content type: ${content.type}`)
+        console.warn(
+          [
+            `During GitHubFileStore.keys()`,
+            `I found unhandled content type: ${content.type}`,
+          ].join("\n")
+        )
       }
     }
 
     return keys
   }
 
-  async get(key: string): Promise<string | undefined> {
-    throw new Error("TODO")
+  async get(path: string): Promise<string | undefined> {
+    const content = await this.getContent(`${this.dir}/${path}`)
+
+    if (!("content" in content)) {
+      throw new Error(
+        [
+          `I was expecting blob returned from github to have content`,
+          `  owner: ${this.owner}`,
+          `  repo: ${this.repo}`,
+          `  dir: ${this.dir}`,
+          `  path: ${path}`,
+          ``,
+          `Maybe the given dir is not dir but a file?`,
+        ].join("\n")
+      )
+    }
+
+    const text = Base64.decode(content.content)
+
+    return text
   }
 }

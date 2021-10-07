@@ -1,13 +1,16 @@
 import process from "process"
+import * as ut from "../ut"
 
 export function test(description: string, fn: () => Promise<void>): void {
   fn()
     .then(() => {
-      console.log(`Ok: ${description}`)
+      const head = ut.colors.blue("Ok")
+      console.log(`${head}: ${description}`)
       process.exit()
     })
     .catch((error) => {
-      console.error(`Fail: ${description}`)
+      const head = ut.colors.red("Fail")
+      console.error(`${head}: ${description}`)
       console.error(error)
       process.exit(1)
     })

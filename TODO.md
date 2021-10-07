@@ -1,7 +1,5 @@
 # store
 
-- `github-file-store` -- get
-
 - `gitlab-file-store`
 
 # resource
