@@ -4,6 +4,7 @@
 - test by `snapshot-error-command.error.ts`
 
 - `enchanter snapshot` delete old snapshot after successful run
+- `enchanter error` delete old snapshot after successful run
 
 - `TestRunner.test` use async job queue
 
