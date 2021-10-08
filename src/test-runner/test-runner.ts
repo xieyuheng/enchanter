@@ -84,10 +84,6 @@ export class TestResult {
     }
   }
 
-  snapshotError(): void {
-    throw new Error("TODO")
-  }
-
   async snapshot(output: string): Promise<void> {
     this.logger.info({
       tag: "snapshot",
@@ -105,6 +101,10 @@ export class TestResult {
     //   this will ensure delete old snapshot after successful run
     await fs.promises.mkdir(Path.dirname(output), { recursive: true })
     await fs.promises.writeFile(output, this.stdout)
+  }
+
+  snapshotError(): void {
+    throw new Error("TODO")
   }
 }
 

@@ -2,6 +2,13 @@
 
 Enchanter is web (and console) application framework with powerful spells! 🪄
 
+> Clarity is the key.
+>
+> Study your spells, strive for clarity. <br>
+> For clarity is the key towards powerful magic.
+>
+> -- Anonymous Archimage
+
 ## Install
 
 ```
