@@ -33,9 +33,9 @@ export class TestResult {
   private reportError(): void {
     if (this.stderr || this.error) {
       ut.logLines([
-        `I found error in the target program`,
+        `I found error in the program:`,
         ``,
-        `  target: ${this.target}`,
+        `  target program: ${this.target}`,
         ``,
       ])
 
