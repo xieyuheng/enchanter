@@ -1,9 +1,13 @@
-# test-runner
+- rename `ut.lines` to `ut.logLines`
 
-- [cli] `enchanter test` run glob
 - [cli] `enchanter snapshot` run glob
 
-- use async job queue
+- use `enchanter` to replace `dev` script
+
+- `TestResult.assertOk` improve format
+- `TestResult.snapshot` improve format
+
+- `TestRunner.test` use async job queue
 
 # cli
 

@@ -4,27 +4,30 @@ import * as Commands from "../commands"
 import { TestRunner } from "../../test-runner"
 import app from "../../app"
 import ty from "@xieyuheng/ty"
-import changeCase from "change-case"
-import glob from "fast-glob"
+import fastGlob from "fast-glob"
 
-type Args = {}
+type Args = { program: string; glob: string }
 type Opts = {}
 
 export class TestCommand extends Command<Args, Opts> {
   name = "test"
 
-  description = "Run lib/**/*.test.js"
+  description = "Test a program over glob, for example: 'lib/**/*.test.js'"
 
-  args = {}
+  args = { program: ty.string(), glob: ty.string() }
   opts = {}
+
+  help(runner: CommandRunner): string {
+    return ""
+  }
 
   async execute(argv: Args & Opts): Promise<void> {
     const runner = new TestRunner()
 
     runner.info()
 
-    for (const file of await glob("lib/**/*.test.js")) {
-      const result = await runner.test(`node ${file}`)
+    for (const file of await fastGlob(argv["glob"])) {
+      const result = await runner.test(`${argv["program"]} ${file}`)
       result.assertOk()
     }
 

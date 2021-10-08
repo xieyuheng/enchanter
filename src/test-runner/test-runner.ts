@@ -7,20 +7,20 @@ const exec = util.promisify(child_process.exec)
 import * as ut from "../ut"
 
 export class TestResult {
-  program: string
+  target: string
   stdout: string
   stderr: string
   elapse: number
-  error?: Error
+  error?: any
 
   constructor(opts: {
-    program: string
+    target: string
     stdout: string
     stderr: string
     elapse: number
-    error?: Error
+    error?: any
   }) {
-    this.program = opts.program
+    this.target = opts.target
     this.stdout = opts.stdout
     this.stderr = opts.stderr
     this.elapse = opts.elapse
@@ -34,7 +34,7 @@ export class TestResult {
 
     if (this.stderr || this.error) {
       ut.lines([
-        `I expect the program to be ok: ${this.program}, but error occured.`,
+        `I expect the target program to be ok: ${this.target}, but error occured.`,
       ])
 
       if (this.stderr) {
@@ -42,7 +42,11 @@ export class TestResult {
       }
 
       if (this.error) {
-        ut.lines([`  error message:`, ut.indent(this.error.message, "    ")])
+        if (this.error.message) {
+          ut.lines([`  error message:`, ut.indent(this.error.message, "    ")])
+        } else {
+          ut.lines([`  error:`, ut.indent(this.error, "    ")])
+        }
       }
 
       process.exit(1)
@@ -67,29 +71,18 @@ export class TestRunner {
 
   // NOTE See the following docs for the use of `exec`:
   //   https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
-  async test(program: string): Promise<TestResult> {
+  async test(target: string): Promise<TestResult> {
     const t0 = Date.now()
     try {
-      const { stdout, stderr } = await exec(program)
+      const { stdout, stderr } = await exec(target)
       const t1 = Date.now()
       const elapse = t1 - t0
-      return new TestResult({
-        program,
-        stdout,
-        stderr,
-        elapse,
-      })
+      return new TestResult({ target, stdout, stderr, elapse })
     } catch (error) {
       const t1 = Date.now()
       const elapse = t1 - t0
       const { stdout, stderr } = error as any
-      return new TestResult({
-        program,
-        stdout,
-        stderr,
-        elapse,
-        error: error as any,
-      })
+      return new TestResult({ target, stdout, stderr, elapse, error })
     }
   }
 }

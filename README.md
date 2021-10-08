@@ -1,6 +1,6 @@
 # Enchanter
 
-Enchanter is web (and console) application framework with powerful spells 🪄!
+Enchanter is web (and console) application framework with powerful spells! 🪄
 
 ## Install
 
