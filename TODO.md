@@ -1,8 +1,14 @@
+- `TestResult.snapshot` -- inplace snapshot by append `.out` and `.err`
+
+- test by `example.test.ts`
+
 - [cli] `enchanter snapshot` run glob
 
   - test by `example.snapshot.ts`
 
-- `TestResult.snapshot`
+- `TestResult.assertError`
+
+- test by `example.error.ts`
 
 - `TestRunner.test` use async job queue
 

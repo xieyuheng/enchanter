@@ -32,6 +32,7 @@ export class TestResult {
 
   assertOk(): void {
     this.logger.info({
+      tag: "ok",
       msg: this.target,
       elapse: this.elapse,
     })
@@ -64,27 +65,34 @@ export class TestResult {
     }
   }
 
-  // assertError():
-  // snapshot(outputFile: string): void {}
+  assertError(): void {
+    throw new Error("TODO")
+  }
+
+  async snapshot(outputFile: string): Promise<void> {
+    this.logger.info({
+      tag: "snapshot",
+      msg: this.target,
+      elapse: this.elapse,
+    })
+  }
 }
 
 export class TestRunner {
   info() {
-    const header = ut.colors.bold(ut.colors.green("(info)"))
-
-    console.log(header, {
+    return {
       pid: process.pid,
       arch: process.arch,
       platform: process.platform,
       cores: os.cpus().length,
-    })
+    }
   }
 
-  // NOTE See the following docs for the use of `exec`:
-  //   https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
   async test(target: string): Promise<TestResult> {
     const t0 = Date.now()
     try {
+      // NOTE See the following docs for the use of `exec`:
+      //   https://nodejs.org/api/child_process.html#child_process_child_process_exec_command_options_callback
       const { stdout, stderr } = await exec(target)
       const t1 = Date.now()
       const elapse = t1 - t0

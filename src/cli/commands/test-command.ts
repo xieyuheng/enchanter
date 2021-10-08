@@ -24,7 +24,7 @@ export class TestCommand extends Command<Args, Opts> {
   async execute(argv: Args & Opts): Promise<void> {
     const runner = new TestRunner()
 
-    runner.info()
+    app.logger.info(runner.info())
 
     for (const file of await fastGlob(argv["glob"])) {
       const result = await runner.test(`${argv["program"]} ${file}`)
