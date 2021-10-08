@@ -1,10 +1,11 @@
-- `enchanter snapshot` delete old snapshot after successful run
+- `enchanter snapshot` support `--exclude <glob>`
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
-
 - `TestResult.snapshotError`
 
-- test by `example.error.ts`
+- test by `snapshot-error-command.error.ts`
+
+- `enchanter snapshot` delete old snapshot after successful run
 
 - `TestRunner.test` use async job queue
 

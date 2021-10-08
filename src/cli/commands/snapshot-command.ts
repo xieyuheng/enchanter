@@ -20,23 +20,21 @@ export class SnapshotCommand extends Command<Args, Opts> {
   args = { program: ty.string(), glob: ty.string() }
   opts = { extern: ty.optional(ty.string()) }
 
+  // prettier-ignore
   help(runner: CommandRunner): string {
-    const name = ut.colors.blue("snapshot")
-
-    // prettier-ignore
     return [
-      `The ${name} command take a program name, a glob pattern for files,`,
+      `The ${ut.colors.blue(this.name)} command take a program name, a glob pattern for files,`,
       `and run the program over each file in the files,`,
       `then write output of each result to an output file named '<file>.out'`,
       ``,
-      ut.colors.blue(`  ${runner.name} snapshot ts-node 'src/**/*.snapshot.ts'`),
+      ut.colors.blue(`  ${runner.name} ${this.name} ts-node 'src/**/*.snapshot.ts'`),
       ``,
       `The example above will write output to 'src/**/*.snapshot.ts.out'`,
       ``,
       `Note that, snapshot output file should be checked into source control.`,
       `We can use '--extern <dir>' to specify an external output directory.`,
       ``,
-      ut.colors.blue(`  ${runner.name} snapshot node 'lib/**/*.snapshot.js' --extern snapshot`),
+      ut.colors.blue(`  ${runner.name} ${this.name} node 'lib/**/*.snapshot.js' --extern snapshot`),
       ``,
       `Then the output will be written into 'snapshot/<generated-flat-file-name>.out'`,
       ``,

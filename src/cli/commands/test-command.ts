@@ -8,7 +8,7 @@ import ty from "@xieyuheng/ty"
 import fastGlob from "fast-glob"
 
 type Args = { program: string; glob: string }
-type Opts = {}
+type Opts = { exclude?: string }
 
 export class TestCommand extends Command<Args, Opts> {
   name = "test"
@@ -16,16 +16,20 @@ export class TestCommand extends Command<Args, Opts> {
   description = "Test a program over glob, for example: 'lib/**/*.test.js'"
 
   args = { program: ty.string(), glob: ty.string() }
-  opts = {}
+  opts = { exclude: ty.optional(ty.string()) }
 
+  // prettier-ignore
   help(runner: CommandRunner): string {
-    const name = ut.colors.blue("test")
-
     return [
-      `The ${name} command take a program name, a glob pattern for files,`,
+      `The ${ut.colors.blue(this.name)} command take a program name, a glob pattern for files,`,
       `and run the program over each file in the files.`,
       ``,
-      ut.colors.blue(`  ${runner.name} test node 'lib/**/*.test.js'`),
+      ut.colors.blue(`  ${runner.name} ${this.name} node 'lib/**/*.test.js'`),
+      ``,
+      `We can use '--exclude <glob>' exclude some files.`,
+      ``,
+      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.cic' --exclude 'tests/**/*.error.cic'`),
+      ``,
     ].join("\n")
   }
 
@@ -34,9 +38,13 @@ export class TestCommand extends Command<Args, Opts> {
 
     app.logger.info(runner.info())
 
+    const exclude = argv["exclude"] ? await fastGlob(argv["exclude"]) : []
+
     for (const file of await fastGlob(argv["glob"])) {
-      const result = await runner.test(`${argv["program"]} ${file}`)
-      result.assertOk()
+      if (!exclude.includes(file)) {
+        const result = await runner.test(`${argv["program"]} ${file}`)
+        result.assertOk()
+      }
     }
   }
 }
