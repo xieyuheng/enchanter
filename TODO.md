@@ -3,6 +3,7 @@
 - [cli] setup `enchanter test` -- print info
 
 - `test-runner` -- merge `@xieyuheng/test-runner` into `enchanter`
+
 - use async job queue
 
 # cli
