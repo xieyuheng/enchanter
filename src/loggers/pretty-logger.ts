@@ -36,7 +36,7 @@ export class PrettyLogger extends Logger {
   }
 
   private formatElapse(elapse: number): string {
-    return ut.colors.yellow (`<${elapse}ms>`)
+    return ut.colors.yellow(`<${elapse}ms>`)
   }
 
   private formatTag(tag: string): string {

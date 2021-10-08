@@ -33,7 +33,7 @@ export class TestResult {
   assertOk(): void {
     this.logger.info({
       msg: this.target,
-      elapse: this.elapse
+      elapse: this.elapse,
     })
 
     if (this.stdout) {

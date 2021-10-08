@@ -1,11 +1,8 @@
 - [cli] `enchanter snapshot` run glob
 
-- `TestResult.snapshot` improve format
+  - test by `example.snapshot.ts`
 
-- use `enchanter` to replace `dev` script
-
-
-
+- `TestResult.snapshot`
 
 - `TestRunner.test` use async job queue
 
