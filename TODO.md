@@ -1,6 +1,7 @@
 # test-runner
 
 - `test-runner` -- merge `@xieyuheng/test-runner` into `enchanter`
+- use async job queue
 
 # cli
 
