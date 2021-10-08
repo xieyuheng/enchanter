@@ -1,3 +1,4 @@
+import * as Loggers from "../loggers"
 import Path from "path"
 import fs from "fs"
 import os from "os"
@@ -12,6 +13,8 @@ export class TestResult {
   stderr: string
   elapse: number
   error?: any
+
+  logger = new Loggers.PrettyLogger()
 
   constructor(opts: {
     target: string
@@ -28,6 +31,11 @@ export class TestResult {
   }
 
   assertOk(): void {
+    this.logger.info({
+      msg: this.target,
+      elapse: this.elapse
+    })
+
     if (this.stdout) {
       console.log(this.stdout)
     }

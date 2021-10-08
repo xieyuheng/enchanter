@@ -1,9 +1,13 @@
+- `PrettyLogger` handle `elapse` property
+
 - [cli] `enchanter snapshot` run glob
+
+- `TestResult.snapshot` improve format
 
 - use `enchanter` to replace `dev` script
 
-- `TestResult.assertOk` improve format
-- `TestResult.snapshot` improve format
+
+
 
 - `TestRunner.test` use async job queue
 
