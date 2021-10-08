@@ -1,6 +1,6 @@
 # test-runner
 
-- merge `@xieyuheng/test-runner` into `enchanter`
+- `test-runner` -- merge `@xieyuheng/test-runner` into `enchanter`
 
 # cli
 
