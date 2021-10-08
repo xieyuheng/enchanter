@@ -61,7 +61,7 @@ export class PrettyLogger extends Logger {
 
     s += this.formatTime(new Date()) + " "
     s += this.formatLevel(level) + " "
-    if (elapse) s += this.formatElapse(elapse) + " "
+    if (elapse !== undefined) s += this.formatElapse(elapse) + " "
     if (tag) s += this.formatTag(tag) + " "
     if (msg) s += `${msg}`
     s += "\n"
