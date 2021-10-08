@@ -58,7 +58,8 @@ export class SnapshotCommand extends Command<Args, Opts> {
     if (argv["extern"]) {
       for (const file of files) {
         const result = await runner.test(`${argv["program"]} ${file}`)
-        await result.snapshot(argv["extern"] + "/" + paramCase(file) + ".out")
+        const generated = paramCase(`${argv["program"]} ${file}`)
+        await result.snapshot(argv["extern"] + "/" + generated + ".out")
       }
     } else {
       for (const file of files) {
