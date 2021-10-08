@@ -2,6 +2,20 @@
 
 - merge `@xieyuheng/test-runner` into `enchanter`
 
+# cli
+
+- `enchanter test` -- to run `*.test.js` in `lib` -- by convention
+
+  - how about other languages like `cicada`?
+
+- `enchanter snapshot` -- to run `*.snapshot.js` in `lib` -- by convention
+
+  - output to `snapshot`
+
+- discover `commands` from `lib/cli/commands` -- by convention
+
+- discover `commands` by config in `enchanter.config.js`
+
 # resource
 
 - `postgres-resource` -- `get`
