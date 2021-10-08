@@ -1,10 +1,8 @@
-- [cli] `enchanter snapshot` run glob
-
-  - test by `example.snapshot.ts`
+- test `enchanter snapshot` by `example.snapshot.ts`
 
 - [cli] `enchanter test` support `--exclude <glob>`
 
-- test by `example.test.ts`
+- test `enchanter test` by `example.test.ts`
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
 

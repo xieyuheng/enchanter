@@ -6,8 +6,8 @@ export function run(): void {
   const runner = new CommandRunners.CommonCommandRunner({
     defaultCommand: new Commands.DefaultCommand(),
     commands: [
-      // TODO
       new Commands.TestCommand(),
+      new Commands.SnapshotCommand(),
       new CommonHelpCommand(),
     ],
   })

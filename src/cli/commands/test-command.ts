@@ -3,6 +3,7 @@ import { CommandRunner } from "../../command-runner"
 import * as Commands from "../commands"
 import { TestRunner } from "../../test-runner"
 import app from "../../app"
+import * as ut from "../../ut"
 import ty from "@xieyuheng/ty"
 import fastGlob from "fast-glob"
 
@@ -18,7 +19,14 @@ export class TestCommand extends Command<Args, Opts> {
   opts = {}
 
   help(runner: CommandRunner): string {
-    return ""
+    const name = ut.colors.blue("test")
+
+    return [
+      `The ${name} command take a program name, a glob pattern for files,`,
+      `and run the program over each file in the files.`,
+      ``,
+      ut.colors.blue(`  ${runner.name} test node 'lib/**/*.test.js'`),
+    ].join("\n")
   }
 
   async execute(argv: Args & Opts): Promise<void> {
@@ -30,13 +38,5 @@ export class TestCommand extends Command<Args, Opts> {
       const result = await runner.test(`${argv["program"]} ${file}`)
       result.assertOk()
     }
-
-    // await test(
-    //   "node $file",
-    //   { file: "lib/**/*.snapshot.js" },
-    //   snapshot.out(({ file }) =>
-    //     path.resolve("snapshot", changeCase.paramCase(file) + ".out")
-    //   )
-    // )
   }
 }
