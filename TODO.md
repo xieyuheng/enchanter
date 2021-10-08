@@ -1,7 +1,3 @@
-- update readme
-
-  Enchanter is web (and console) application framework with powerful spells 🪄!
-
 # test-runner
 
 - [cli] `enchanter test` run glob
