@@ -10,7 +10,7 @@ import fastGlob from "fast-glob"
 import { paramCase } from "change-case"
 
 type Args = { program: string; glob: string }
-type Opts = { extern?: string }
+type Opts = { extern?: string; exclude?: string }
 
 export class SnapshotCommand extends Command<Args, Opts> {
   name = "snapshot"
@@ -18,7 +18,7 @@ export class SnapshotCommand extends Command<Args, Opts> {
   description = "Snapshot a program over glob, write output to .out"
 
   args = { program: ty.string(), glob: ty.string() }
-  opts = { extern: ty.optional(ty.string()) }
+  opts = { extern: ty.optional(ty.string()), exclude: ty.optional(ty.string()) }
 
   // prettier-ignore
   help(runner: CommandRunner): string {
@@ -38,6 +38,10 @@ export class SnapshotCommand extends Command<Args, Opts> {
       ``,
       `Then the output will be written into 'snapshot/<generated-flat-file-name>.out'`,
       ``,
+      `The ${ut.colors.blue(this.name)} command also support '--exclude <glob>' option.`,
+      ``,
+      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.cic' --exclude 'tests/**/*.error.cic'`),
+      ``,
     ].join("\n")
   }
 
@@ -46,13 +50,18 @@ export class SnapshotCommand extends Command<Args, Opts> {
 
     app.logger.info(runner.info())
 
+    const exclude = argv["exclude"] ? await fastGlob(argv["exclude"]) : []
+    const files = (await fastGlob(argv["glob"])).filter(
+      (file) => !exclude.includes(file)
+    )
+
     if (argv["extern"]) {
-      for (const file of await fastGlob(argv["glob"])) {
+      for (const file of files) {
         const result = await runner.test(`${argv["program"]} ${file}`)
         await result.snapshot(argv["extern"] + "/" + paramCase(file) + ".out")
       }
     } else {
-      for (const file of await fastGlob(argv["glob"])) {
+      for (const file of files) {
         const result = await runner.test(`${argv["program"]} ${file}`)
         await result.snapshot(file + ".out")
       }

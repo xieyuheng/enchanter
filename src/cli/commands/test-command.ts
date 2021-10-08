@@ -39,12 +39,13 @@ export class TestCommand extends Command<Args, Opts> {
     app.logger.info(runner.info())
 
     const exclude = argv["exclude"] ? await fastGlob(argv["exclude"]) : []
+    const files = (await fastGlob(argv["glob"])).filter(
+      (file) => !exclude.includes(file)
+    )
 
-    for (const file of await fastGlob(argv["glob"])) {
-      if (!exclude.includes(file)) {
-        const result = await runner.test(`${argv["program"]} ${file}`)
-        result.assertOk()
-      }
+    for (const file of files) {
+      const result = await runner.test(`${argv["program"]} ${file}`)
+      result.assertOk()
     }
   }
 }

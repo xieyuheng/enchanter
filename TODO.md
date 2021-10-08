@@ -1,5 +1,3 @@
-- `enchanter snapshot` support `--exclude <glob>`
-
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
 
