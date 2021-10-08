@@ -1,8 +1,4 @@
-- test `enchanter snapshot` by `example.snapshot.ts`
-
-- [cli] `enchanter test` support `--exclude <glob>`
-
-- test `enchanter test` by `example.test.ts`
+- `enchanter snapshot` delete old snapshot after successful run
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
 

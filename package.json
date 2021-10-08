@@ -12,7 +12,8 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "format": "prettier src --write",
-    "test": "./bin/enchanter.js test node 'lib/**/*.test.js'"
+    "snapshot": "./bin/enchanter.js snapshot node 'lib/**/*.snapshot.js' --extern snapshot",
+    "test": "./bin/enchanter.js test node 'lib/**/*.test.js' && npm run snapshot"
   },
   "prettier": {
     "semi": false,
