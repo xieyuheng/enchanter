@@ -1,5 +1,3 @@
-- rename `ut.lines` to `ut.logLines`
-
 - [cli] `enchanter snapshot` run glob
 
 - use `enchanter` to replace `dev` script

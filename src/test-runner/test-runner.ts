@@ -33,19 +33,22 @@ export class TestResult {
     }
 
     if (this.stderr || this.error) {
-      ut.lines([
+      ut.logLines([
         `I expect the target program to be ok: ${this.target}, but error occured.`,
       ])
 
       if (this.stderr) {
-        ut.lines([`  stderr:`, ut.indent(this.stderr, "    ")])
+        ut.logLines([`  stderr:`, ut.indent(this.stderr, "    ")])
       }
 
       if (this.error) {
         if (this.error.message) {
-          ut.lines([`  error message:`, ut.indent(this.error.message, "    ")])
+          ut.logLines([
+            `  error message:`,
+            ut.indent(this.error.message, "    "),
+          ])
         } else {
-          ut.lines([`  error:`, ut.indent(this.error, "    ")])
+          ut.logLines([`  error:`, ut.indent(this.error, "    ")])
         }
       }
 
