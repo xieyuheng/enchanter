@@ -28,7 +28,7 @@ export class TestCommand extends Command<Args, Opts> {
       ``,
       `We can use '--exclude <glob>' exclude some files.`,
       ``,
-      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.cic' --exclude 'tests/**/*.error.cic'`),
+      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.(cic|md)' --exclude 'tests/**/*.error.(cic|md)'`),
       ``,
     ].join("\n")
   }

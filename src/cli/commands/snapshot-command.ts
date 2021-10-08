@@ -40,7 +40,7 @@ export class SnapshotCommand extends Command<Args, Opts> {
       ``,
       `The ${ut.colors.blue(this.name)} command also support '--exclude <glob>' option.`,
       ``,
-      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.cic' --exclude 'tests/**/*.error.cic'`),
+      ut.colors.blue(`  ${runner.name} ${this.name} cic 'tests/**/*.(cic|md)' --exclude 'tests/**/*.error.(cic|md)'`),
       ``,
     ].join("\n")
   }
