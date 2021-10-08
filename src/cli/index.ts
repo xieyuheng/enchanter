@@ -7,6 +7,7 @@ export function run(): void {
     defaultCommand: new Commands.DefaultCommand(),
     commands: [
       // TODO
+      new Commands.TestCommand(),
       new CommonHelpCommand(),
     ],
   })
