@@ -1,12 +1,13 @@
+- `TestRunner.test` use async job queue
+
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
 
 - test by `snapshot-error-command.error.ts`
 
-- `enchanter snapshot` delete old snapshot after successful run
-- `enchanter error` delete old snapshot after successful run
+- `enchanter error` write snapshot even `stderr` is empty
 
-- `TestRunner.test` use async job queue
+   - this will ensure delete old snapshot after successful run
 
 # cli
 
