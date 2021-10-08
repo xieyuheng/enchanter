@@ -1,12 +1,14 @@
-- `TestResult.snapshot` -- inplace snapshot by append `.out` and `.err`
-
-- test by `example.test.ts`
-
 - [cli] `enchanter snapshot` run glob
 
   - test by `example.snapshot.ts`
 
-- `TestResult.assertError`
+- [cli] `enchanter test` support `--exclude <glob>`
+
+- test by `example.test.ts`
+
+- `TestResult.snapshotError` -- snapshot by append `.err`
+
+- `TestResult.snapshotError`
 
 - test by `example.error.ts`
 

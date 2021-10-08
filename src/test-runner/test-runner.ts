@@ -30,6 +30,43 @@ export class TestResult {
     this.error = opts.error
   }
 
+  private reportError(): void {
+    if (this.stderr || this.error) {
+      ut.logLines([
+        `I found error in the target program`,
+        ``,
+        `  target: ${this.target}`,
+        ``,
+      ])
+
+      if (this.stderr) {
+        ut.logLines([
+          //
+          `  stderr:`,
+          ``,
+          ut.indent(this.stderr, "    "),
+        ])
+      }
+
+      if (this.error) {
+        if (this.error.message) {
+          ut.logLines([
+            `  error message:`,
+            ``,
+            ut.indent(this.error.message, "    "),
+          ])
+        } else {
+          ut.logLines([
+            //
+            `  error:`,
+            ``,
+            ut.indent(this.error, "    "),
+          ])
+        }
+      }
+    }
+  }
+
   assertOk(): void {
     this.logger.info({
       tag: "ok",
@@ -42,39 +79,32 @@ export class TestResult {
     }
 
     if (this.stderr || this.error) {
-      ut.logLines([
-        `I expect the target program to be ok: ${this.target}, but error occured.`,
-      ])
-
-      if (this.stderr) {
-        ut.logLines([`  stderr:`, ut.indent(this.stderr, "    ")])
-      }
-
-      if (this.error) {
-        if (this.error.message) {
-          ut.logLines([
-            `  error message:`,
-            ut.indent(this.error.message, "    "),
-          ])
-        } else {
-          ut.logLines([`  error:`, ut.indent(this.error, "    ")])
-        }
-      }
-
+      this.reportError()
       process.exit(1)
     }
   }
 
-  assertError(): void {
+  snapshotError(): void {
     throw new Error("TODO")
   }
 
-  async snapshot(outputFile: string): Promise<void> {
+  async snapshot(output: string): Promise<void> {
     this.logger.info({
       tag: "snapshot",
       msg: this.target,
       elapse: this.elapse,
+      output,
     })
+
+    if (this.stderr || this.error) {
+      this.reportError()
+      process.exit(1)
+    }
+
+    if (this.stdout) {
+      await fs.promises.mkdir(Path.dirname(output), { recursive: true })
+      await fs.promises.writeFile(output, this.stdout)
+    }
   }
 }
 
