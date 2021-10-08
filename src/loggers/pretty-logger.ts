@@ -35,6 +35,10 @@ export class PrettyLogger extends Logger {
     return ut.colors.yellow(`[${time}]`)
   }
 
+  private formatElapse(elapse: number): string {
+    return ut.colors.yellow (`<${elapse}ms>`)
+  }
+
   private formatTag(tag: string): string {
     return ut.colors.bold(`(${tag})`)
   }
@@ -45,19 +49,25 @@ export class PrettyLogger extends Logger {
     return `  ${k}: ${v}`
   }
 
-  log(opts: { level: string; tag?: string; msg?: string }): void {
-    const { level, tag, msg } = opts
+  log(opts: {
+    level: string
+    elapse?: number
+    tag?: string
+    msg?: string
+  }): void {
+    const { level, elapse, tag, msg } = opts
 
     let s = ""
 
     s += this.formatTime(new Date()) + " "
     s += this.formatLevel(level) + " "
+    if (elapse) s += this.formatElapse(elapse) + " "
     if (tag) s += this.formatTag(tag) + " "
     if (msg) s += `${msg}`
     s += "\n"
 
     for (const [key, value] of Object.entries(opts)) {
-      if (!["level", "tag", "msg"].includes(key)) {
+      if (!["level", "tag", "msg", "elapse"].includes(key)) {
         s += this.formatProperty(key, value)
         s += "\n"
       }

@@ -1,5 +1,3 @@
-- `PrettyLogger` handle `elapse` property
-
 - [cli] `enchanter snapshot` run glob
 
 - `TestResult.snapshot` improve format
