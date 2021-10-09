@@ -8,16 +8,16 @@ export class GitLabFileStore extends FileStore {
   path: string
   dir: string
 
-  host: string
+  hostURL: string
   token?: string
 
   constructor(
     path: string,
-    opts: { dir?: string; token?: string; host?: string }
+    opts: { dir?: string; token?: string; hostURL?: string }
   ) {
     super()
     this.path = path
-    this.host = opts.host || "https://gitlab.com"
+    this.hostURL = opts.hostURL || "https://gitlab.com"
     this.dir = opts.dir || ""
     this.token = opts.token
   }
@@ -31,12 +31,12 @@ export class GitLabFileStore extends FileStore {
 
     if (ut.isBrowser()) {
       const { Gitlab } = await import("@gitbeaker/browser")
-      const requester = new Gitlab({ host: this.host, token: this.token })
+      const requester = new Gitlab({ host: this.hostURL, token: this.token })
       this.cacheRequester = requester
       return requester
     } else {
       const { Gitlab } = await import("@gitbeaker/node")
-      const requester = new Gitlab({ host: this.host, token: this.token })
+      const requester = new Gitlab({ host: this.hostURL, token: this.token })
       this.cacheRequester = requester
       return requester
     }
