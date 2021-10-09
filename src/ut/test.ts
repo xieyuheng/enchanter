@@ -1,8 +1,11 @@
 import process from "process"
 import * as ut from "../ut"
 
-export function test(description: string, fn: () => Promise<void>): void {
-  fn()
+export async function test(
+  description: string,
+  fn: () => Promise<void>
+): Promise<void> {
+  await fn()
     .then(() => {
       const head = ut.colors.blue("Ok")
       console.log(`${head}: ${description}`)
