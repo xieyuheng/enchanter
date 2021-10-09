@@ -13,16 +13,18 @@ export class CommonHelpCommand extends Command<Args> {
   args = { name: ty.optional(ty.string()) }
 
   help(runner: CommandRunner): string {
-    const name = ut.colors.blue(this.name)
+    const { blue } = this.colors
 
     return [
-      `The ${name} command displays help for a given command.`,
+      `The ${blue(this.name)} command displays help for a given command.`,
       ``,
-      ut.colors.blue(`  ${runner.name} help help`),
+      blue(`  ${runner.name} help help`),
     ].join("\n")
   }
 
   async execute(argv: Args, runner: CommandRunner): Promise<void> {
+    const { yellow } = this.colors
+
     if (argv["name"]) {
       this.helpCommand(argv["name"], runner)
     } else {
@@ -34,7 +36,7 @@ export class CommonHelpCommand extends Command<Args> {
       console.log(
         [
           //
-          ut.colors.yellow(`Help:`),
+          yellow(`Help:`),
           ut.indent(this.help(runner), "  "),
         ].join("\n")
       )
@@ -42,6 +44,8 @@ export class CommonHelpCommand extends Command<Args> {
   }
 
   helpCommand(name: string, runner: CommandRunner): void {
+    const { yellow, blue } = this.colors
+
     const command = runner.commands.find((command) => command.name === name)
 
     if (command === undefined) {
@@ -54,7 +58,7 @@ export class CommonHelpCommand extends Command<Args> {
     console.log(
       [
         //
-        ut.colors.yellow(`Description:`),
+        yellow(`Description:`),
         `  ${command.description}`,
         ``,
       ].join("\n")
@@ -63,21 +67,21 @@ export class CommonHelpCommand extends Command<Args> {
     console.log(
       [
         //
-        ut.colors.yellow(`Usage:`),
-        `  ${ut.colors.blue(`${name} ${this.signature(command)}`)}`,
+        yellow(`Usage:`),
+        `  ${blue(`${name} ${this.signature(command)}`)}`,
         ``,
       ].join("\n")
     )
 
     if (Object.entries(command.opts).length > 0) {
       const options = Object.entries(command.opts)
-        .map(([key, schema]) => ut.colors.blue(`--${key}`))
+        .map(([key, schema]) => blue(`--${key}`))
         .join("\n")
 
       console.log(
         [
           //
-          ut.colors.yellow(`Options:`),
+          yellow(`Options:`),
           ut.indent(options, "  "),
           ``,
         ].join("\n")
@@ -88,7 +92,7 @@ export class CommonHelpCommand extends Command<Args> {
       console.log(
         [
           //
-          ut.colors.yellow(`Help:`),
+          yellow(`Help:`),
           ut.indent(command.help(runner), "  "),
         ].join("\n")
       )
@@ -96,10 +100,12 @@ export class CommonHelpCommand extends Command<Args> {
   }
 
   usage(): void {
+    const { yellow } = this.colors
+
     console.log(
       [
         //
-        ut.colors.yellow(`Usage:`),
+        yellow(`Usage:`),
         `  command [arguments] [options]`,
         ``,
       ].join("\n")
@@ -107,15 +113,15 @@ export class CommonHelpCommand extends Command<Args> {
   }
 
   defaultCommand(runner: CommandRunner): void {
+    const { yellow, blue } = this.colors
+
     if (runner.defaultCommand) {
       const command = runner.defaultCommand
 
       console.log(
         [
-          ut.colors.yellow(`Default command:`),
-          `  ${ut.colors.blue(this.signature(command))}  ${
-            command.description
-          }`,
+          yellow(`Default command:`),
+          `  ${blue(this.signature(command))}  ${command.description}`,
           ``,
         ].join("\n")
       )
@@ -123,20 +129,21 @@ export class CommonHelpCommand extends Command<Args> {
   }
 
   listCommands(runner: CommandRunner): void {
+    const { yellow, blue } = this.colors
+
     const size = Math.max(
       ...runner.commands.map(
         (command) => `${command.name} ${this.signature(command)}`.length
       )
     )
 
-    console.log(ut.colors.yellow(`Commands:`))
+    console.log(yellow(`Commands:`))
     for (const command of runner.commands) {
       const head = `${command.name} ${this.signature(command)}`
       console.log(
         [
-          `  ${ut.colors.blue(ut.rightPad(head, size))}  ${
-            command.description
-          }`,
+          //
+          `  ${blue(ut.rightPad(head, size))}  ${command.description}`,
         ].join("\n")
       )
     }

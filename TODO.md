@@ -1,5 +1,3 @@
-- `TestRunner.test` use async job queue
-
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
 
@@ -17,3 +15,7 @@
 # file-generator
 
 - use js template string and `eval`
+
+# refactor
+
+- [refactor] improve functions about printing `common-help-command`
