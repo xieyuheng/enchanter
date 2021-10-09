@@ -1,6 +1,7 @@
 import fs from "fs"
 import { Schema } from "@xieyuheng/ty"
 import { CommandRunner } from "../command-runner"
+import * as ut from "../ut"
 
 type SchemaObject<T> = { [P in keyof T]: Schema<T[P]> }
 
@@ -15,6 +16,8 @@ export abstract class Command<
   opts: SchemaObject<Opts> = {} as SchemaObject<Opts>
 
   alias: Record<string, Array<string>> = {}
+
+  colors = ut.colors
 
   help?(runner: CommandRunner): string
 
