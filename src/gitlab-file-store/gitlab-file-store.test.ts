@@ -3,7 +3,7 @@ import { Gitlab } from "@gitbeaker/node"
 import ty from "@xieyuheng/ty"
 import * as ut from "../ut"
 
-ut.test(GitLabFileStore.name + ".keys()", async () => {
+ut.test("keys", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
     requester: new Gitlab({}),
     dir: "books/logic-and-judgment",
@@ -13,7 +13,7 @@ ut.test(GitLabFileStore.name + ".keys()", async () => {
   ut.assert(keys.includes("book.json"))
 })
 
-ut.test("GitLabFileStore.get()", async () => {
+ut.test("get", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
     requester: new Gitlab({}),
     dir: "books/logic-and-judgment",
@@ -26,6 +26,21 @@ ut.test("GitLabFileStore.get()", async () => {
     title: ty.string(),
     version: ty.semver(),
     src: ty.string(),
+  })
+
+  schema.validate(config)
+})
+
+ut.test("get from empty dir", async () => {
+  const files = new GitLabFileStore("cicada-lang/cicada", {
+    requester: new Gitlab({}),
+  })
+
+  const text = await files.getOrFail("package.json")
+  const config = JSON.parse(text)
+
+  const schema = ty.object({
+    name: ty.string(),
   })
 
   schema.validate(config)

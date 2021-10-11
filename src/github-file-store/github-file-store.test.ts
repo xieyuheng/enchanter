@@ -2,7 +2,7 @@ import { GitHubFileStore } from "../github-file-store"
 import ty from "@xieyuheng/ty"
 import * as ut from "../ut"
 
-ut.test("GitHubFileStore.keys()", async () => {
+ut.test("keys", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "books/logic-and-judgment",
   })
@@ -11,7 +11,7 @@ ut.test("GitHubFileStore.keys()", async () => {
   ut.assert(keys.includes("book.json"))
 })
 
-ut.test("GitHubFileStore.get()", async () => {
+ut.test("get", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "books/logic-and-judgment",
   })
@@ -23,6 +23,19 @@ ut.test("GitHubFileStore.get()", async () => {
     title: ty.string(),
     version: ty.semver(),
     src: ty.string(),
+  })
+
+  schema.validate(config)
+})
+
+ut.test("get from empty dir", async () => {
+  const files = new GitHubFileStore("cicada-lang/cicada")
+
+  const text = await files.getOrFail("package.json")
+  const config = JSON.parse(text)
+
+  const schema = ty.object({
+    name: ty.string(),
   })
 
   schema.validate(config)

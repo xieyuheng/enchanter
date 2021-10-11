@@ -47,7 +47,7 @@ export class GitLabFileStore extends FileStore {
 
     const fileEntry = await RepositoryFiles.show(
       this.path,
-      `${this.dir}/${path}`,
+      normalizeFile(`${this.dir}/${path}`),
       "master"
     )
 
@@ -65,4 +65,12 @@ function normalizeDir(dir: string): string {
   if (dir.endsWith("//")) return normalizeDir(dir.slice(0, dir.length - 1))
   if (!dir.endsWith("/")) return dir + "/"
   else return dir
+}
+
+// NOTE Examples:
+//   "/a" => "a"
+//   "/a/b" => "/a/b"
+function normalizeFile(file: string): string {
+  if (file.startsWith("/")) return normalizeFile(file.slice(1))
+  else return file
 }

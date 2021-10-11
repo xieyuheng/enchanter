@@ -12,21 +12,21 @@ export class GitHubFileStore extends FileStore {
 
   requester: Octokit
 
-  constructor(path: string, opts: { dir?: string; token?: string }) {
+  constructor(path: string, opts?: { dir?: string; token?: string }) {
     super()
     this.path = path
-    this.dir = opts.dir || ""
+    this.dir = opts?.dir || ""
     const [owner, repo] = path.split("/")
     this.owner = owner
     this.repo = repo
-    this.requester = new Octokit({ auth: opts.token })
+    this.requester = new Octokit({ auth: opts?.token })
   }
 
   private async getContent(path: string) {
     const { data } = await this.requester.rest.repos.getContent({
       owner: this.owner,
       repo: this.repo,
-      path,
+      path: normalizeFile(path),
     })
 
     return data
@@ -119,4 +119,12 @@ export class GitHubFileStore extends FileStore {
 
     return Base64.decode(content.content)
   }
+}
+
+// NOTE Examples:
+//   "/a" => "a"
+//   "/a/b" => "/a/b"
+function normalizeFile(file: string): string {
+  if (file.startsWith("/")) return normalizeFile(file.slice(1))
+  else return file
 }
