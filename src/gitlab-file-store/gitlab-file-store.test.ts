@@ -6,7 +6,7 @@ import * as ut from "../ut"
 ut.test(GitLabFileStore.name + ".keys()", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
     requester: new Gitlab({}),
-    dir: "books/the-little-typer",
+    dir: "books/logic-and-judgment",
   })
 
   const keys = await files.keys()
@@ -16,14 +16,14 @@ ut.test(GitLabFileStore.name + ".keys()", async () => {
 ut.test("GitLabFileStore.get()", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
     requester: new Gitlab({}),
-    dir: "books/the-little-typer",
+    dir: "books/logic-and-judgment",
   })
 
   const text = await files.getOrFail("book.json")
   const config = JSON.parse(text)
 
   const schema = ty.object({
-    name: ty.string(),
+    title: ty.string(),
     version: ty.semver(),
     src: ty.string(),
   })

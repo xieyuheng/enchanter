@@ -4,7 +4,7 @@ import * as ut from "../ut"
 
 ut.test("GitHubFileStore.keys()", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
-    dir: "books/the-little-typer",
+    dir: "books/logic-and-judgment",
   })
 
   const keys = await files.keys()
@@ -13,14 +13,14 @@ ut.test("GitHubFileStore.keys()", async () => {
 
 ut.test("GitHubFileStore.get()", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
-    dir: "books/the-little-typer",
+    dir: "books/logic-and-judgment",
   })
 
   const text = await files.getOrFail("book.json")
   const config = JSON.parse(text)
 
   const schema = ty.object({
-    name: ty.string(),
+    title: ty.string(),
     version: ty.semver(),
     src: ty.string(),
   })
