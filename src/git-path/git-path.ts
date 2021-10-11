@@ -1,4 +1,8 @@
 import { Base64 } from "js-base64"
+import { GitHubFileStore } from "../github-file-store"
+import { GitLabFileStore } from "../gitlab-file-store"
+import { FileStore } from "../file-store"
+import Path from "path"
 
 export class GitPath {
   host: string
@@ -44,5 +48,12 @@ export class GitPath {
           ? `${this.host}/${this.repo}/-/tree/master/${this.path}`
           : `${this.host}/${this.repo}`
     }
+  }
+
+  upward(): GitPath {
+    const { host, repo, path } = this
+    const dirname = Path.dirname(path)
+    const dir = dirname === "." ? "" : dirname
+    return new GitPath({ host, repo, path: dir })
   }
 }
