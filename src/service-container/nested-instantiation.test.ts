@@ -30,23 +30,23 @@ class Service {
   }
 }
 
-const container = new ServiceContainer()
+const app = new ServiceContainer()
 
-container.bind(Logger, () => new Logger())
+app.bind(Logger, () => new Logger())
 
-container.bind(SessionStore, ({ create }) => {
+app.bind(SessionStore, (app) => {
   return new SessionStore({
-    logger: create(Logger),
+    logger: app.create(Logger),
   })
 })
 
-container.bind(Service, ({ create }) => {
+app.bind(Service, (app) => {
   return new Service({
-    logger: create(Logger),
-    sessionStore: create(SessionStore),
+    logger: app.create(Logger),
+    sessionStore: app.create(SessionStore),
   })
 })
 
-console.log(container.create(Logger))
-console.log(container.create(SessionStore))
-console.log(container.create(Service))
+console.log(app.create(Logger))
+console.log(app.create(SessionStore))
+console.log(app.create(Service))

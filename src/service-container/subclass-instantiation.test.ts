@@ -29,15 +29,15 @@ class DbResource extends Resource {
   }
 }
 
-const container = new ServiceContainer()
+const app = new ServiceContainer()
 
-container.bind(Logger, () => new Logger())
+app.bind(Logger, () => new Logger())
 
-container.bind(Resource, ({ create }) => {
+app.bind(Resource, (app) => {
   return new DbResource({
-    logger: create(Logger),
+    logger: app.create(Logger),
   })
 })
 
-console.log(container.create(Logger))
-console.log(container.create(Resource))
+console.log(app.create(Logger))
+console.log(app.create(Resource))
