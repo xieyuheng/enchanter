@@ -1,4 +1,4 @@
-- `SilentLogger`
+- `Logger` -- Template Method Pattern
 
 - `ServiceContainer.bootstrap` -- use `SilentLogger` to void conditionals
 
