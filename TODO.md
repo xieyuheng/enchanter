@@ -1,4 +1,4 @@
-- `ServiceProvider` class
+- `ServiceContainer.bootstrap`
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
@@ -11,8 +11,11 @@
 
 # cli
 
-- discover `commands` from `lib/cli/commands` -- by convention
-- discover `commands` by config in `enchanter.config.js`
+- discover `commands` from `lib/cli/commands`
+
+  - we need better convention, maybe `console/commands`
+
+- [maybe] discover `commands` by config in `enchanter.config.js`
 
 # file-generator
 
