@@ -1,5 +1,3 @@
-- `ServiceContainer.bootstrap` -- use `SilentLogger` to void conditionals
-
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
 

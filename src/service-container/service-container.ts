@@ -1,4 +1,5 @@
 import { ServiceProvider } from "../service-provider"
+import * as Loggers from "../loggers"
 import { Logger } from "../logger"
 
 type Consturctor<T> = {
@@ -26,22 +27,13 @@ export class ServiceContainer {
     providers: Array<ServiceProvider>,
     opts?: { logger?: Logger }
   ): Promise<void> {
-    for (const provider of providers) {
-      if (opts?.logger) {
-        opts.logger.info({
-          tag: "register",
-          msg: `${provider.constructor.name}`,
-        })
-      }
-      await provider.register(this)
+    const logger = opts?.logger || new Loggers.SilentLogger()
 
+    for (const provider of providers) {
+      logger.info({ tag: "register", msg: `${provider.constructor.name}` })
+      await provider.register(this)
       if (provider.boot) {
-        if (opts?.logger) {
-          opts.logger.info({
-            tag: "boot",
-            msg: `${provider.constructor.name}`,
-          })
-        }
+        logger.info({ tag: "boot", msg: `${provider.constructor.name}` })
         await provider.boot(this)
       }
     }
