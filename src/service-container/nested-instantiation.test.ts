@@ -1,4 +1,4 @@
-import { Container } from "./container"
+import { ServiceContainer } from "./service-container"
 
 class Logger {
   instanceofLogger = true
@@ -30,7 +30,7 @@ class Service {
   }
 }
 
-const container = new Container()
+const container = new ServiceContainer()
 
 container.bind(Logger, () => new Logger())
 

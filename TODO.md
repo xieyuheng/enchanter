@@ -1,3 +1,5 @@
+- `ServiceProvider` class
+
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`
 
