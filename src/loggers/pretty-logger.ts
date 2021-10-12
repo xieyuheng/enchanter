@@ -1,21 +1,27 @@
-import { Logger } from "../logger"
+import { Logger, LogOptions } from "../logger"
 import * as ut from "../ut"
 
 export class PrettyLogger extends Logger {
-  info(input: string | Record<string, any>): void {
-    if (typeof input === "string") {
-      this.log({ msg: input, level: "info" })
-    } else {
-      this.log({ ...input, level: "info" })
-    }
-  }
+  log(opts: LogOptions): void {
+    const { level, elapse, tag, msg } = opts
 
-  error(input: string | Record<string, any>): void {
-    if (typeof input === "string") {
-      this.log({ msg: input, level: "error" })
-    } else {
-      this.log({ ...input, level: "error" })
+    let s = ""
+
+    s += this.formatTime(new Date()) + " "
+    s += this.formatLevel(level) + " "
+    if (elapse !== undefined) s += this.formatElapse(elapse) + " "
+    if (tag) s += this.formatTag(tag) + " "
+    if (msg) s += `${msg}`
+    s += "\n"
+
+    for (const [key, value] of Object.entries(opts)) {
+      if (!["level", "tag", "msg", "elapse"].includes(key)) {
+        s += this.formatProperty(key, value)
+        s += "\n"
+      }
     }
+
+    console.log(s.trim())
   }
 
   private formatLevel(level: string): string {
@@ -47,32 +53,5 @@ export class PrettyLogger extends Logger {
     const k = ut.colors.italic(ut.colors.yellow(key))
     const v = JSON.stringify(value)
     return `  ${k}: ${v}`
-  }
-
-  log(opts: {
-    level: string
-    elapse?: number
-    tag?: string
-    msg?: string
-  }): void {
-    const { level, elapse, tag, msg } = opts
-
-    let s = ""
-
-    s += this.formatTime(new Date()) + " "
-    s += this.formatLevel(level) + " "
-    if (elapse !== undefined) s += this.formatElapse(elapse) + " "
-    if (tag) s += this.formatTag(tag) + " "
-    if (msg) s += `${msg}`
-    s += "\n"
-
-    for (const [key, value] of Object.entries(opts)) {
-      if (!["level", "tag", "msg", "elapse"].includes(key)) {
-        s += this.formatProperty(key, value)
-        s += "\n"
-      }
-    }
-
-    console.log(s.trim())
   }
 }

@@ -1,5 +1,3 @@
-- `Logger` -- Template Method Pattern
-
 - `ServiceContainer.bootstrap` -- use `SilentLogger` to void conditionals
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
