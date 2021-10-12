@@ -1,4 +1,6 @@
-- `ServiceContainer.bootstrap` be able to log informatino for debugging
+- `SilentLogger`
+
+- `ServiceContainer.bootstrap` -- use `SilentLogger` to void conditionals
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`

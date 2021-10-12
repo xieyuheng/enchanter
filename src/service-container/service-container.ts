@@ -1,4 +1,5 @@
 import { ServiceProvider } from "../service-provider"
+import { Logger } from "../logger"
 
 type Consturctor<T> = {
   new (...args: Array<any>): T
@@ -21,10 +22,28 @@ export class ServiceContainer {
     }
   }
 
-  async bootstrap(providers: Array<ServiceProvider>): Promise<void> {
+  async bootstrap(
+    providers: Array<ServiceProvider>,
+    opts?: { logger?: Logger }
+  ): Promise<void> {
     for (const provider of providers) {
+      if (opts?.logger) {
+        opts.logger.info({
+          tag: "register",
+          msg: `${provider.constructor.name}`,
+        })
+      }
       await provider.register(this)
-      await provider.boot(this)
+
+      if (provider.boot) {
+        if (opts?.logger) {
+          opts.logger.info({
+            tag: "boot",
+            msg: `${provider.constructor.name}`,
+          })
+        }
+        await provider.boot(this)
+      }
     }
   }
 }
