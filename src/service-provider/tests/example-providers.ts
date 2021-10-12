@@ -1,5 +1,5 @@
-import { ServiceProvider } from "../service-provider"
-import { ServiceContainer } from "../service-container"
+import { ServiceProvider } from "../../service-provider"
+import { ServiceContainer } from "../../service-container"
 
 export class Logger {
   instanceofLogger = true

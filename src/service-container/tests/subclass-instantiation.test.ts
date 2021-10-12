@@ -1,4 +1,4 @@
-import { ServiceContainer } from "./service-container"
+import { ServiceContainer } from "../../service-container"
 
 class Logger {
   instanceofLogger = true
