@@ -1,4 +1,6 @@
-- `ServiceContainer.bootstrap`
+- move tests to `tests/` sub dir
+
+- `ServiceContainer.bootstrap` be able to log informatino for debugging
 
 - `TestResult.snapshotError` -- snapshot by append `.err`
 - `TestResult.snapshotError`

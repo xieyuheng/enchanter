@@ -1,3 +1,5 @@
+import { ServiceProvider } from "../service-provider"
+
 type Consturctor<T> = {
   new (...args: Array<any>): T
   name: string
@@ -16,6 +18,13 @@ export class ServiceContainer {
 
     this.create = <T2, C2 extends Consturctor<T2>>(inputCls: C1 | C2): T2 => {
       return inputCls === givenClass ? factory(this) : (create(inputCls) as any)
+    }
+  }
+
+  async bootstrap(providers: Array<ServiceProvider>): Promise<void> {
+    for (const provider of providers) {
+      await provider.register(this)
+      await provider.boot(this)
     }
   }
 }
