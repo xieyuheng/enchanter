@@ -32,6 +32,9 @@ export class ServiceContainer {
     for (const provider of providers) {
       logger.info({ tag: "register", msg: `${provider.constructor.name}` })
       await provider.register(this)
+    }
+
+    for (const provider of providers) {
       if (provider.boot) {
         logger.info({ tag: "boot", msg: `${provider.constructor.name}` })
         await provider.boot(this)
