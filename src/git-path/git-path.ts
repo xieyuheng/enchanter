@@ -65,7 +65,7 @@ export class GitPath {
     return new GitPath({
       host: this.host,
       repo: this.repo,
-      path: new URL(path, `${prefix$}{this.path}`).href.slice(prefix.length),
+      path: new URL(path, `${prefix}${this.path}`).href.slice(prefix.length),
     })
   }
 
