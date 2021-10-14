@@ -1,5 +1,5 @@
 import { FileStore } from "../file-store"
-import type { Gitlab } from "@gitbeaker/browser"
+import axios, { AxiosInstance } from "axios"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"
 import * as ut from "../ut"
@@ -8,28 +8,50 @@ export class GitLabFileStore extends FileStore {
   path: string
   dir: string
 
-  requester: InstanceType<typeof Gitlab>
+  instance: AxiosInstance
 
   constructor(
     path: string,
-    opts: {
-      requester: InstanceType<typeof Gitlab>
+    opts?: {
+      host?: string
+      token?: string
       dir?: string
     }
   ) {
     super()
     this.path = path
-    this.requester = opts.requester
-    this.dir = opts.dir || ""
+    this.dir = opts?.dir || ""
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    }
+
+    if (opts?.token) {
+      headers["Authorization"] = `Bearer ${opts.token}`
+    }
+
+    const host = opts?.host || "gitlab.com"
+
+    this.instance = axios.create({
+      baseURL: `https://${host}/api/v4`,
+      timeout: 0, // NOTE no timeout,
+      headers,
+    })
   }
 
   async keys(): Promise<Array<string>> {
-    const { Repositories } = this.requester
+    const projectId = encodeURIComponent(this.path)
 
-    const entries = await Repositories.tree(this.path, {
-      path: this.dir,
-      recursive: true,
-    })
+    const { data: entries }: any = await this.instance.get(
+      `/projects/${projectId}/repository/tree`,
+      {
+        params: {
+          path: this.dir,
+          recursive: true,
+        },
+      }
+    )
 
     const keys: Array<string> = []
 
@@ -43,12 +65,16 @@ export class GitLabFileStore extends FileStore {
   }
 
   async get(path: string): Promise<string | undefined> {
-    const { RepositoryFiles } = this.requester
+    const projectId = encodeURIComponent(this.path)
+    const filePath = encodeURIComponent(normalizeFile(`${this.dir}/${path}`))
 
-    const fileEntry = await RepositoryFiles.show(
-      this.path,
-      normalizeFile(`${this.dir}/${path}`),
-      "master"
+    const { data: fileEntry }: any = await this.instance.get(
+      `/projects/${projectId}/repository/files/${filePath}`,
+      {
+        params: {
+          ref: "master",
+        },
+      }
     )
 
     return Base64.decode(fileEntry.content)
