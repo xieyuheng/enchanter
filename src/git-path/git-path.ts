@@ -15,11 +15,13 @@ export class GitPath {
     this.path = opts.path || ""
   }
 
-  format(): string {
+  private format(): string {
     return JSON.stringify([this.host, this.repo, this.path])
   }
 
-  static parse(str: string): [host: string, repo: string, path: string] {
+  private static parse(
+    str: string
+  ): [host: string, repo: string, path: string] {
     const [host, repo, path] = JSON.parse(str)
     return [host, repo, path]
   }
@@ -55,6 +57,16 @@ export class GitPath {
     const dirname = Path.dirname(path)
     const dir = dirname === "." ? "" : dirname
     return new GitPath({ host, repo, path: dir })
+  }
+
+  resolve(path: string): GitPath {
+    const prefix = "placeholder:/"
+
+    return new GitPath({
+      host: this.host,
+      repo: this.repo,
+      path: new URL(path, `${prefix$}{this.path}`).href.slice(prefix.length),
+    })
   }
 
   createFileStore(): FileStore {
