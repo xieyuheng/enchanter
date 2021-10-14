@@ -1,11 +1,4 @@
-- `TestResult.snapshotError` -- snapshot by append `.err`
-- `TestResult.snapshotError`
-
-- test by `snapshot-error-command.error.ts`
-
-- `enchanter error` write snapshot even `stderr` is empty
-
-   - this will ensure delete old snapshot after successful run
+- `TestResult` do not report error -- only stderr
 
 # git-file-store
 

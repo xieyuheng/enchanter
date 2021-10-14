@@ -12,8 +12,10 @@
     "build": "tsc",
     "watch": "tsc --watch",
     "format": "prettier src --write",
-    "snapshot": "./bin/enchanter.js snapshot node 'lib/**/*.snapshot.js' --extern snapshot",
-    "test": "./bin/enchanter.js test node 'lib/**/*.test.js' && npm run snapshot"
+    "test:js": "./bin/enchanter.js test node 'lib/**/*.test.js'",
+    "test:snapshot": "./bin/enchanter.js snapshot node 'lib/**/*.snapshot.js' --extern snapshot",
+    "test:snapshot-error": "./bin/enchanter.js snapshot-error node 'lib/**/*.error.js' --extern snapshot",
+    "test": "npm-run-all test:*"
   },
   "prettier": {
     "semi": false,
@@ -24,6 +26,7 @@
     "@types/nanoid": "^2.1.0",
     "@types/node": "^16.10.4",
     "@types/yargs-parser": "^20.2.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },

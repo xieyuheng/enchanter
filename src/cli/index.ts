@@ -8,6 +8,7 @@ export function run(): void {
     commands: [
       new Commands.TestCommand(),
       new Commands.SnapshotCommand(),
+      new Commands.SnapshotErrorCommand(),
       new CommonHelpCommand(),
     ],
   })
