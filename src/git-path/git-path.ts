@@ -56,4 +56,17 @@ export class GitPath {
     const dir = dirname === "." ? "" : dirname
     return new GitPath({ host, repo, path: dir })
   }
+
+  createFileStore(): FileStore {
+    const { host, repo, path: dir } = this
+
+    switch (host) {
+      case "github":
+        return new GitHubFileStore(repo, { dir })
+      case "gitlab":
+        return new GitLabFileStore(repo, { dir })
+      default:
+        return new GitLabFileStore(repo, { dir, host })
+    }
+  }
 }
