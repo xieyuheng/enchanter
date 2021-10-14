@@ -1,5 +1,3 @@
-- `TestResult` do not report error -- only stderr
-
 # git-file-store
 
 - `git-file-store`

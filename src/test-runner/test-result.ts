@@ -84,36 +84,20 @@ export class TestResult {
   private reportError(): void {
     if (this.stderr || this.error) {
       ut.logLines([
-        `I found error in the program:`,
+        `I found error in the target program:`,
         ``,
-        `  target program: ${this.target}`,
+        ut.colors.yellow(`  program:`),
+        ``,
+        `    ${this.target}`,
         ``,
       ])
 
       if (this.stderr) {
         ut.logLines([
-          //
-          `  stderr:`,
+          ut.colors.yellow(`  stderr:`),
           ``,
           ut.indent(this.stderr, "    "),
         ])
-      }
-
-      if (this.error) {
-        if (this.error.message) {
-          ut.logLines([
-            `  error message:`,
-            ``,
-            ut.indent(this.error.message, "    "),
-          ])
-        } else {
-          ut.logLines([
-            //
-            `  error:`,
-            ``,
-            ut.indent(this.error, "    "),
-          ])
-        }
       }
     }
   }
@@ -122,9 +106,11 @@ export class TestResult {
     if (this.stderr || this.error) return
 
     ut.logLines([
-      `I expect to found error in the program:`,
+      `I expect to found error in the target program:`,
       ``,
-      `  target program: ${this.target}`,
+      ut.colors.yellow(`  program:`),
+      ``,
+      `    ${this.target}`,
       ``,
       `But no error occured.`,
       ``,
@@ -132,8 +118,7 @@ export class TestResult {
 
     if (this.stdout) {
       ut.logLines([
-        //
-        `  stdout:`,
+        ut.colors.yellow(`  stdout:`),
         ``,
         ut.indent(this.stdout, "    "),
       ])
