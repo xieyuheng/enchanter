@@ -36,18 +36,18 @@ export class GitPath {
 
   formatURL(): string {
     switch (this.host) {
-      case "github":
+      case "github.com":
         return this.path
           ? `https://github.com/${this.repo}/tree/master/${this.path}`
           : `https://github.com/${this.repo}`
-      case "gitlab":
+      case "gitlab.com":
         return this.path
           ? `https://gitlab.com/${this.repo}/-/tree/master/${this.path}`
           : `https://gitlab.com/${this.repo}`
       default:
         return this.path
-          ? `${this.host}/${this.repo}/-/tree/master/${this.path}`
-          : `${this.host}/${this.repo}`
+          ? `https://${this.host}/${this.repo}/-/tree/master/${this.path}`
+          : `https://${this.host}/${this.repo}`
     }
   }
 
@@ -72,11 +72,11 @@ export class GitPath {
     const { host, repo, path: dir } = this
 
     switch (host) {
-      case "github":
+      case "github.com":
         return new GitFileStores.GitHubFileStore(repo, { dir })
-      case "gitlab":
+      case "gitlab.com":
         return new GitFileStores.GitLabFileStore(repo, { dir })
-      case "gitee":
+      case "gitee.com":
         return new GitFileStores.GiteeFileStore(repo, { dir })
       default:
         return new GitFileStores.GitLabFileStore(repo, { dir, host })
@@ -85,18 +85,12 @@ export class GitPath {
 
   static fromURL(input: string): GitPath {
     const url = new URL(input)
-    if (url.host === "github.com") {
-      const [repo, path] = url.pathname.slice(1).split("/tree/master/")
-      return new GitPath({ host: "github", repo, path })
-    } else if (url.host === "gitlab.com") {
-      const [repo, path] = url.pathname.slice(1).split("/-/tree/master/")
-      return new GitPath({ host: "gitlab", repo, path })
-    } else if (url.host === "gitee.com") {
-      const [repo, path] = url.pathname.slice(1).split("/tree/master/")
-      return new GitPath({ host: "gitee", repo, path })
-    } else {
-      const [repo, path] = url.pathname.slice(1).split("/-/tree/master/")
-      return new GitPath({ host: url.host, repo, path })
-    }
+    const { host, pathname } = url
+    const middle =
+      host === "github.com" || host === "gitee.com"
+        ? "/tree/master/"
+        : "/-/tree/master/" // NOTE for gitlab
+    const [repo, path] = pathname.slice(1).split(middle)
+    return new GitPath({ host, repo, path })
   }
 }
