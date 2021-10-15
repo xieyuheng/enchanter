@@ -1,3 +1,5 @@
+- extract `git-file-store-test-suite`
+
 # gitee-file-store
 
 - `gitee-file-store`
