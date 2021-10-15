@@ -12,7 +12,7 @@ export class GitLabFileStore extends GitFileStore {
   host?: string
   token?: string
 
-  instance: AxiosInstance
+  requester: AxiosInstance
 
   constructor(
     path: string,
@@ -40,7 +40,7 @@ export class GitLabFileStore extends GitFileStore {
 
     const host = opts?.host || "gitlab.com"
 
-    this.instance = axios.create({
+    this.requester = axios.create({
       baseURL: `https://${host}/api/v4`,
       timeout: 0, // NOTE no timeout,
       headers,
@@ -58,7 +58,7 @@ export class GitLabFileStore extends GitFileStore {
   async keys(): Promise<Array<string>> {
     const projectId = encodeURIComponent(this.path)
 
-    const { data: entries }: any = await this.instance.get(
+    const { data: entries }: any = await this.requester.get(
       `/projects/${projectId}/repository/tree`,
       {
         params: {
@@ -83,7 +83,7 @@ export class GitLabFileStore extends GitFileStore {
     const projectId = encodeURIComponent(this.path)
     const filePath = encodeURIComponent(normalizeFile(`${this.dir}/${path}`))
 
-    const { data: fileEntry }: any = await this.instance.get(
+    const { data: fileEntry }: any = await this.requester.get(
       `/projects/${projectId}/repository/files/${filePath}`,
       {
         params: {
