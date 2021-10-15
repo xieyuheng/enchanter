@@ -1,9 +1,6 @@
-# gitee-file-store
+- `gitlab-file-store` rename `instance` to `requester`
 
-- `gitee-file-store`
-
-  - https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoBranchesBranch
-  - https://gitee.com/api/v5/swagger#/getV5ReposOwnerRepoContents(Path)
+- `gitee-file-store` rename `instance` to `requester`
 
 # cli
 
