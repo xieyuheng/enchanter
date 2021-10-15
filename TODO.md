@@ -1,3 +1,5 @@
+- `gitee-file-store` -- `get`
+
 - `gitlab-file-store` rename `instance` to `requester`
 
 - `gitee-file-store` rename `instance` to `requester`

@@ -13,16 +13,16 @@ ut.test("keys", async () => {
   ut.assert(keys.includes("book.json"))
 })
 
-// ut.test("cd", async () => {
-//   const files = new GiteeFileStore(repo, {
-//     dir: "books/logic-and-judgment",
-//   })
+ut.test("cd", async () => {
+  const files = new GiteeFileStore(repo, {
+    dir: "books/logic-and-judgment",
+  })
 
-//   {
-//     const keys = await files.cd("src").cd("..").keys()
-//     ut.assert(keys.includes("book.json"))
-//   }
-// })
+  {
+    const keys = await files.cd("src").cd("..").keys()
+    ut.assert(keys.includes("book.json"))
+  }
+})
 
 // ut.test("get", async () => {
 //   const files = new GiteeFileStore(repo, {
