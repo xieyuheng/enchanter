@@ -2,8 +2,6 @@
 
 - `git-file-store` -- cd to `subdir`
 
-- `git-path` return `git-file-store`
-
 # gitee-file-store
 
 - `gitee-file-store`

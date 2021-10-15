@@ -1,6 +1,5 @@
 import { Base64 } from "js-base64"
 import * as GitFileStores from "../git-file-stores"
-import { FileStore } from "../file-store"
 import { GitFileStore } from "../git-file-store"
 import Path from "path"
 
@@ -69,7 +68,7 @@ export class GitPath {
     })
   }
 
-  createFileStore(): FileStore {
+  createGitFileStore(): GitFileStore {
     const { host, repo, path: dir } = this
 
     switch (host) {
