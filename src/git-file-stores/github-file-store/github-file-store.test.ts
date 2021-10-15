@@ -11,6 +11,17 @@ ut.test("keys", async () => {
   ut.assert(keys.includes("book.json"))
 })
 
+ut.test("cd", async () => {
+  const files = new GitHubFileStore("cicada-lang/cicada", {
+    dir: "books/logic-and-judgment",
+  })
+
+  {
+    const keys = await files.cd("src").cd("..").keys()
+    ut.assert(keys.includes("book.json"))
+  }
+})
+
 ut.test("get", async () => {
   const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "books/logic-and-judgment",

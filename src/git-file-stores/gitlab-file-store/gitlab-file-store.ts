@@ -3,25 +3,31 @@ import axios, { AxiosInstance } from "axios"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"
 import * as ut from "../../ut"
+import Path from "path"
 
 export class GitLabFileStore extends GitFileStore {
   path: string
   dir: string
+
+  host?: string
+  token?: string
 
   instance: AxiosInstance
 
   constructor(
     path: string,
     opts?: {
+      dir?: string
       host?: string
       token?: string
-      dir?: string
     }
   ) {
     const dir = opts?.dir || ""
     super({ path, dir })
     this.path = path
     this.dir = dir
+    this.host = opts?.host
+    this.token = opts?.token
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -38,6 +44,14 @@ export class GitLabFileStore extends GitFileStore {
       baseURL: `https://${host}/api/v4`,
       timeout: 0, // NOTE no timeout,
       headers,
+    })
+  }
+
+  cd(subdir: string): GitLabFileStore {
+    return new GitLabFileStore(this.path, {
+      dir: Path.normalize(`${this.dir}/${subdir}`),
+      host: this.host,
+      token: this.token,
     })
   }
 

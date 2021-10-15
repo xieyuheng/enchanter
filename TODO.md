@@ -1,5 +1,3 @@
-- `git-file-store` -- cd to `subdir`
-
 # gitee-file-store
 
 - `gitee-file-store`

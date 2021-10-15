@@ -2,6 +2,7 @@ import { GitFileStore } from "../../git-file-store"
 import { Octokit } from "@octokit/rest"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"
+import Path from "path"
 
 export class GitHubFileStore extends GitFileStore {
   path: string
@@ -9,6 +10,7 @@ export class GitHubFileStore extends GitFileStore {
 
   owner: string
   repo: string
+  token?: string
 
   requester: Octokit
 
@@ -17,10 +19,18 @@ export class GitHubFileStore extends GitFileStore {
     super({ path, dir })
     this.path = path
     this.dir = dir
+    this.token = opts?.token
     const [owner, repo] = path.split("/")
     this.owner = owner
     this.repo = repo
     this.requester = new Octokit({ auth: opts?.token })
+  }
+
+  cd(subdir: string): GitHubFileStore {
+    return new GitHubFileStore(this.path, {
+      dir: Path.normalize(`${this.dir}/${subdir}`),
+      token: this.token,
+    })
   }
 
   private async getContent(path: string) {

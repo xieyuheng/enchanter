@@ -9,4 +9,6 @@ export abstract class GitFileStore extends FileStore {
     this.path = opts.path
     this.dir = opts.dir
   }
+
+  abstract cd(subdir: string): GitFileStore
 }
