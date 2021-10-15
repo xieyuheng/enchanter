@@ -1,3 +1,5 @@
+- `ServiceContainer.create` be able to take `opts` in a well typed way
+
 # cli
 
 - discover `commands` from `lib/cli/commands`
