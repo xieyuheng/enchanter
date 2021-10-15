@@ -1,5 +1,3 @@
-- `gitee-file-store` -- `get`
-
 # cli
 
 - discover `commands` from `lib/cli/commands`

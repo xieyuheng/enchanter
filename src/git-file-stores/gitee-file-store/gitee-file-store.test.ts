@@ -24,32 +24,32 @@ ut.test("cd", async () => {
   }
 })
 
-// ut.test("get", async () => {
-//   const files = new GiteeFileStore(repo, {
-//     dir: "books/logic-and-judgment",
-//   })
+ut.test("get", async () => {
+  const files = new GiteeFileStore(repo, {
+    dir: "books/logic-and-judgment",
+  })
 
-//   const text = await files.getOrFail("book.json")
-//   const config = JSON.parse(text)
+  const text = await files.getOrFail("book.json")
+  const config = JSON.parse(text)
 
-//   const schema = ty.object({
-//     title: ty.string(),
-//     version: ty.semver(),
-//     src: ty.string(),
-//   })
+  const schema = ty.object({
+    title: ty.string(),
+    version: ty.semver(),
+    src: ty.string(),
+  })
 
-//   schema.validate(config)
-// })
+  schema.validate(config)
+})
 
-// ut.test("get from empty dir", async () => {
-//   const files = new GiteeFileStore(repo)
+ut.test("get from empty dir", async () => {
+  const files = new GiteeFileStore(repo)
 
-//   const text = await files.getOrFail("package.json")
-//   const config = JSON.parse(text)
+  const text = await files.getOrFail("package.json")
+  const config = JSON.parse(text)
 
-//   const schema = ty.object({
-//     name: ty.string(),
-//   })
+  const schema = ty.object({
+    name: ty.string(),
+  })
 
-//   schema.validate(config)
-// })
+  schema.validate(config)
+})

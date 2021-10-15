@@ -125,21 +125,23 @@ export class GiteeFileStore extends GitFileStore {
   }
 
   async get(path: string): Promise<string | undefined> {
-    throw new Error("TODO")
+    const content: any = await this.getContent(`${this.dir}/${path}`)
 
-    // const projectId = encodeURIComponent(this.path)
-    // const filePath = encodeURIComponent(normalizeFile(`${this.dir}/${path}`))
+    if (!("content" in content)) {
+      throw new Error(
+        [
+          `I was expecting blob returned from gitee to have content`,
+          `  owner: ${this.owner}`,
+          `  repo: ${this.repo}`,
+          `  dir: ${this.dir}`,
+          `  path: ${path}`,
+          ``,
+          `Maybe the given dir is not dir but a file?`,
+        ].join("\n")
+      )
+    }
 
-    // const { data: fileEntry }: any = await this.requester.get(
-    //   `/projects/${projectId}/repository/files/${filePath}`,
-    //   {
-    //     params: {
-    //       ref: "master",
-    //     },
-    //   }
-    // )
-
-    // return Base64.decode(fileEntry.content)
+    return Base64.decode(content.content)
   }
 }
 
