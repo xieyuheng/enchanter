@@ -82,4 +82,21 @@ export class GitPath {
         return new GitFileStores.GitLabFileStore(repo, { dir, host })
     }
   }
+
+  static fromURL(url: string): GitPath {
+    url = new URL(url)
+    if (url.host === "github.com") {
+      const [repo, path] = url.pathname.slice("/").split("/tree/master/")
+      new GitPath({ host: "github", repo, path })
+    } else if (url.host === "gitlab.com") {
+      const [repo, path] = url.pathname.slice("/").split("/-/tree/master/")
+      new GitPath({ host: "gitlab", repo, path })
+    } else if (url.host === "gitee.com") {
+      const [repo, path] = url.pathname.slice("/").split("/tree/master/")
+      new GitPath({ host: "gitee", repo, path })
+    } else {
+      const [repo, path] = url.pathname.slice("/").split("/-/tree/master/")
+      new GitPath({ host: url.host, repo, path })
+    }
+  }
 }
