@@ -76,6 +76,8 @@ export class GitPath {
         return new GitFileStores.GitHubFileStore(repo, { dir })
       case "gitlab":
         return new GitFileStores.GitLabFileStore(repo, { dir })
+      case "gitee":
+        return new GitFileStores.GiteeFileStore(repo, { dir })
       default:
         return new GitFileStores.GitLabFileStore(repo, { dir, host })
     }
