@@ -14,7 +14,7 @@ export class GiteeFileStore extends GitFileStore {
   owner: string
   repo: string
 
-  instance: AxiosInstance
+  requester: AxiosInstance
 
   constructor(
     path: string,
@@ -36,7 +36,7 @@ export class GiteeFileStore extends GitFileStore {
       Accept: "application/json",
     }
 
-    this.instance = axios.create({
+    this.requester = axios.create({
       baseURL: `https://gitee.com/api/v5`,
       timeout: 0, // NOTE no timeout,
       headers,
@@ -50,7 +50,7 @@ export class GiteeFileStore extends GitFileStore {
   }
 
   private async getContent(path: string) {
-    const { data } = await this.instance.get(`/repos/${this.path}/contents`, {
+    const { data } = await this.requester.get(`/repos/${this.path}/contents`, {
       params: { path: normalizeFile(path) },
     })
 
@@ -60,7 +60,7 @@ export class GiteeFileStore extends GitFileStore {
   private async getTree(sha: string, opts?: { recursive?: boolean }) {
     const {
       data: { tree, truncated },
-    }: any = await this.instance.get(`/repos/${this.path}/git/trees/${sha}`, {
+    }: any = await this.requester.get(`/repos/${this.path}/git/trees/${sha}`, {
       params: {
         recursive: Number(opts?.recursive),
       },
@@ -130,7 +130,7 @@ export class GiteeFileStore extends GitFileStore {
     // const projectId = encodeURIComponent(this.path)
     // const filePath = encodeURIComponent(normalizeFile(`${this.dir}/${path}`))
 
-    // const { data: fileEntry }: any = await this.instance.get(
+    // const { data: fileEntry }: any = await this.requester.get(
     //   `/projects/${projectId}/repository/files/${filePath}`,
     //   {
     //     params: {
@@ -142,18 +142,6 @@ export class GiteeFileStore extends GitFileStore {
     // return Base64.decode(fileEntry.content)
   }
 }
-
-// // NOTE Examples:
-// //   "" => ""
-// //   "a" => "a/"
-// //   "a/b" => "a/b/"
-// function normalizeDir(dir: string): string {
-//   if (dir === "") return dir
-//   if (dir.startsWith("/")) return normalizeDir(dir.slice(1))
-//   if (dir.endsWith("//")) return normalizeDir(dir.slice(0, dir.length - 1))
-//   if (!dir.endsWith("/")) return dir + "/"
-//   else return dir
-// }
 
 // NOTE Examples:
 //   "/a" => "a"

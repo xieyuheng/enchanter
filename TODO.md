@@ -1,7 +1,5 @@
 - `gitee-file-store` -- `get`
 
-- `gitee-file-store` rename `instance` to `requester`
-
 # cli
 
 - discover `commands` from `lib/cli/commands`
