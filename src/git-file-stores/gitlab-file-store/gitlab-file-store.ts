@@ -1,8 +1,8 @@
-import { GitFileStore } from "../git-file-store"
+import { GitFileStore } from "../../git-file-store"
 import axios, { AxiosInstance } from "axios"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"
-import * as ut from "../ut"
+import * as ut from "../../ut"
 
 export class GitLabFileStore extends GitFileStore {
   path: string

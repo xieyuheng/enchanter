@@ -1,7 +1,7 @@
 import { Base64 } from "js-base64"
-import { GitHubFileStore } from "../github-file-store"
-import { GitLabFileStore } from "../gitlab-file-store"
+import * as GitFileStores from "../git-file-stores"
 import { FileStore } from "../file-store"
+import { GitFileStore } from "../git-file-store"
 import Path from "path"
 
 export class GitPath {
@@ -74,11 +74,11 @@ export class GitPath {
 
     switch (host) {
       case "github":
-        return new GitHubFileStore(repo, { dir })
+        return new GitFileStores.GitHubFileStore(repo, { dir })
       case "gitlab":
-        return new GitLabFileStore(repo, { dir })
+        return new GitFileStores.GitLabFileStore(repo, { dir })
       default:
-        return new GitLabFileStore(repo, { dir, host })
+        return new GitFileStores.GitLabFileStore(repo, { dir, host })
     }
   }
 }

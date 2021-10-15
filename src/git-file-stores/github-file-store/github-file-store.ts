@@ -1,4 +1,4 @@
-import { GitFileStore } from "../git-file-store"
+import { GitFileStore } from "../../git-file-store"
 import { Octokit } from "@octokit/rest"
 import { Base64 } from "js-base64"
 import ty from "@xieyuheng/ty"

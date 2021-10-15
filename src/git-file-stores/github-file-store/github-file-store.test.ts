@@ -1,9 +1,9 @@
-import { GitLabFileStore } from "../gitlab-file-store"
+import { GitHubFileStore } from "../github-file-store"
 import ty from "@xieyuheng/ty"
-import * as ut from "../ut"
+import * as ut from "../../ut"
 
 ut.test("keys", async () => {
-  const files = new GitLabFileStore("cicada-lang/cicada", {
+  const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "books/logic-and-judgment",
   })
 
@@ -12,7 +12,7 @@ ut.test("keys", async () => {
 })
 
 ut.test("get", async () => {
-  const files = new GitLabFileStore("cicada-lang/cicada", {
+  const files = new GitHubFileStore("cicada-lang/cicada", {
     dir: "books/logic-and-judgment",
   })
 
@@ -29,7 +29,7 @@ ut.test("get", async () => {
 })
 
 ut.test("get from empty dir", async () => {
-  const files = new GitLabFileStore("cicada-lang/cicada")
+  const files = new GitHubFileStore("cicada-lang/cicada")
 
   const text = await files.getOrFail("package.json")
   const config = JSON.parse(text)

@@ -1,4 +1,3 @@
-- `github-file-store` and `gitlab-file-store` move into `git-file-stores`
 - `github-file-store` and `gitlab-file-store` should not take positional arguments
 
 - `git-file-store` -- cd to `subdir`
