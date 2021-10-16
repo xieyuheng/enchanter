@@ -58,22 +58,32 @@ export class GitLabFileStore extends GitFileStore {
   async keys(): Promise<Array<string>> {
     const projectId = encodeURIComponent(this.path)
 
-    const { data: entries }: any = await this.requester.get(
-      `/projects/${projectId}/repository/tree`,
-      {
-        params: {
-          path: this.dir,
-          recursive: true,
-        },
-      }
-    )
-
     const keys: Array<string> = []
 
-    for (const entry of entries) {
-      if (entry.type === "blob" && entry.path.startsWith(this.dir)) {
-        keys.push(entry.path.slice(normalizeDir(this.dir).length))
+    let page = 1
+
+    while (true) {
+      const { data: entries }: any = await this.requester.get(
+        `/projects/${projectId}/repository/tree`,
+        {
+          params: {
+            path: this.dir,
+            recursive: true,
+            per_page: 100,
+            page,
+          },
+        }
+      )
+
+      page++
+
+      for (const entry of entries) {
+        if (entry.type === "blob" && entry.path.startsWith(this.dir)) {
+          keys.push(entry.path.slice(normalizeDir(this.dir).length))
+        }
       }
+
+      if (entries.length === 0) break
     }
 
     return keys
