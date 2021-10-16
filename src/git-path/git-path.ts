@@ -84,13 +84,18 @@ export class GitPath {
   }
 
   static fromURL(input: string): GitPath {
-    const url = new URL(input)
-    const { host, pathname } = url
+    const { host, pathname } = new URL(input)
+
     const middle =
       host === "github.com" || host === "gitee.com"
         ? "/tree/master/"
         : "/-/tree/master/" // NOTE for gitlab
-    const [repo, path] = pathname.slice(1).split(middle)
+
+    const [repo, path] = pathname
+      .slice(1)
+      .replace("/blob/master/", "/tree/master/")
+      .split(middle)
+
     return new GitPath({ host, repo, path })
   }
 }
