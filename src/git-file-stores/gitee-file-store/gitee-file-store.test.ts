@@ -2,11 +2,9 @@ import { GiteeFileStore } from "../gitee-file-store"
 import ty from "@xieyuheng/ty"
 import * as ut from "../../ut"
 
-const repo = "xyheme/cicada"
-
 ut.test("keys", async () => {
-  const files = new GiteeFileStore(repo, {
-    dir: "books/logic-and-judgment",
+  const files = new GiteeFileStore("cicada-lang/cicada", {
+    dir: "books/the-little-typer-exercises",
   })
 
   const keys = await files.keys()
@@ -14,8 +12,8 @@ ut.test("keys", async () => {
 })
 
 ut.test("cd", async () => {
-  const files = new GiteeFileStore(repo, {
-    dir: "books/logic-and-judgment",
+  const files = new GiteeFileStore("cicada-lang/cicada", {
+    dir: "books/the-little-typer-exercises",
   })
 
   {
@@ -25,8 +23,8 @@ ut.test("cd", async () => {
 })
 
 ut.test("get", async () => {
-  const files = new GiteeFileStore(repo, {
-    dir: "books/logic-and-judgment",
+  const files = new GiteeFileStore("cicada-lang/cicada", {
+    dir: "books/the-little-typer-exercises",
   })
 
   const text = await files.getOrFail("book.json")
@@ -42,7 +40,7 @@ ut.test("get", async () => {
 })
 
 ut.test("get from empty dir", async () => {
-  const files = new GiteeFileStore(repo)
+  const files = new GiteeFileStore("cicada-lang/cicada")
 
   const text = await files.getOrFail("package.json")
   const config = JSON.parse(text)

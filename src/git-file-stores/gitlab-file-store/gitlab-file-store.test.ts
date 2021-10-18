@@ -4,7 +4,7 @@ import * as ut from "../../ut"
 
 ut.test("keys", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
-    dir: "books/logic-and-judgment",
+    dir: "books/the-little-typer-exercises",
   })
 
   const keys = await files.keys()
@@ -13,7 +13,7 @@ ut.test("keys", async () => {
 
 ut.test("cd", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
-    dir: "books/logic-and-judgment",
+    dir: "books/the-little-typer-exercises",
   })
 
   {
@@ -24,7 +24,7 @@ ut.test("cd", async () => {
 
 ut.test("get", async () => {
   const files = new GitLabFileStore("cicada-lang/cicada", {
-    dir: "books/logic-and-judgment",
+    dir: "books/the-little-typer-exercises",
   })
 
   const text = await files.getOrFail("book.json")
