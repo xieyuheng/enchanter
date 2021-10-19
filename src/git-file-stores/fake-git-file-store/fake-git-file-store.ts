@@ -5,8 +5,8 @@ export class FakeGitFileStore extends GitFileStore {
   fallback: GitFileStore
 
   constructor(opts: {
-    fallback: GitFileStore
     faked?: Record<string, string>
+    fallback: GitFileStore
   }) {
     const { path, dir } = opts.fallback
     super({ path, dir })

@@ -1,31 +1,31 @@
 import { LocalFileStore } from "./local-file-store"
 
 export class FakeLocalFileStore extends LocalFileStore {
-  dir: string
   faked: Record<string, string>
+  fallback: LocalFileStore
 
-  constructor(opts: { dir: string; faked?: Record<string, string> }) {
-    const { dir, faked } = opts
+  constructor(opts: {
+    faked?: Record<string, string>
+    fallback: LocalFileStore
+  }) {
+    const { dir } = opts.fallback
     super({ dir })
-    this.dir = dir
-    this.faked = faked || {}
-  }
-
-  fake(path: string, text: string): void {
-    this.faked[path] = text
+    this.faked = opts.faked || {}
+    this.fallback = opts.fallback
   }
 
   async keys(): Promise<Array<string>> {
     return Array.from(
-      new Set([...(await super.keys()), ...Object.keys(this.faked)])
+      new Set([...(await this.fallback.keys()), ...Object.keys(this.faked)])
     )
   }
 
   async get(path: string): Promise<string | undefined> {
-    if (this.faked[path] !== undefined) {
-      return this.faked[path]
+    const found = this.faked[path]
+    if (found !== undefined) {
+      return found
     } else {
-      return await super.get(path)
+      return await this.fallback.get(path)
     }
   }
 }
