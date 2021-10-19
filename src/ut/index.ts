@@ -1,7 +1,6 @@
 export * from "./equal"
 export * from "./indent"
 export * from "./assert-equal"
-export * from "./freshen"
 export * from "./format-date"
 export * from "./find-up"
 export * from "./right-pad"
