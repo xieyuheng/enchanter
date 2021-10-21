@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/commonmark": "^0.27.5",
     "@types/nanoid": "^2.1.0",
-    "@types/node": "^16.10.4",
+    "@types/node": "^16.11.1",
     "@types/yargs-parser": "^20.2.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.4.1",
@@ -41,9 +41,9 @@
     "fast-deep-equal": "^3.1.3",
     "fast-glob": "^3.2.7",
     "js-base64": "^3.7.2",
-    "nanoid": "^3.1.29",
+    "nanoid": "^3.1.30",
     "node-watch": "^0.7.2",
-    "picocolors": "^0.2.1",
+    "picocolors": "^1.0.0",
     "readdirp": "^3.6.0",
     "yargs-parser": "^20.2.9"
   },
