@@ -2,23 +2,25 @@ import { ServiceProvider } from "../service-provider"
 import * as Loggers from "../loggers"
 import { Logger } from "../logger"
 
-type Consturctor<T> = {
-  new (...args: Array<any>): T
+type Consturctor = {
+  new (...args: Array<any>): any
   name: string
 }
 
 export class ServiceContainer {
-  create: <T, C extends Consturctor<T>>(inputClass: C) => T = (inputClass) => {
+  create<C extends Consturctor>(inputClass: C): InstanceType<C> {
     throw new Error(`I can not resolve class: ${inputClass.name}`)
   }
 
-  bind<T1, C1 extends Consturctor<T1>, T extends T1>(
+  bind<C1 extends Consturctor>(
     givenClass: C1,
-    factory: (container: ServiceContainer) => T
+    factory: (container: ServiceContainer) => InstanceType<C1>
   ): void {
     const create = this.create
 
-    this.create = <T2, C2 extends Consturctor<T2>>(inputCls: C1 | C2): T2 => {
+    this.create = <C2 extends Consturctor>(
+      inputCls: C1 | C2
+    ): InstanceType<C2> => {
       return inputCls === givenClass ? factory(this) : (create(inputCls) as any)
     }
   }

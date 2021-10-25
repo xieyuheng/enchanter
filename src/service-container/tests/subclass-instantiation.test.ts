@@ -39,5 +39,5 @@ app.bind(Resource, (app) => {
   })
 })
 
-console.log(app.create(Logger))
-console.log(app.create(Resource))
+app.create(Logger).log("create Logger ok")
+app.create(Resource).logger.log("create Resource ok")
