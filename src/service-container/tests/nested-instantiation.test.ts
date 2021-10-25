@@ -47,6 +47,6 @@ app.bind(Service, (app) => {
   })
 })
 
-console.log(app.create(Logger))
-console.log(app.create(SessionStore))
-console.log(app.create(Service))
+app.create(Logger).log("create Logger ok")
+app.create(SessionStore).logger.log("create SessionStore ok")
+app.create(Service).sessionStore.logger.log("create Service ok")
