@@ -1,5 +1,7 @@
 # Enchanter
 
+> [Enchanter (live) - Dragon Age Inquisition (Elizaveta)](https://www.youtube.com/watch?v=i1IC4ymq8Uk&ab_channel=elizavetamusic)
+
 Enchanter is web (and console) application framework with powerful spells! 🪄
 
 > Clarity is the key.
