@@ -13,15 +13,42 @@ export class ServiceContainer {
   }
 
   bind<C1 extends Consturctor>(
-    givenClass: C1,
+    GivenClass: C1,
     factory: (container: ServiceContainer) => InstanceType<C1>
   ): void {
     const create = this.create
 
     this.create = <C2 extends Consturctor>(
-      inputCls: C1 | C2
+      InputClass: C1 | C2
     ): InstanceType<C2> => {
-      return inputCls === givenClass ? factory(this) : (create(inputCls) as any)
+      if (InputClass === GivenClass) {
+        return factory(this) as any
+      } else {
+        return create(InputClass) as any
+      }
+    }
+  }
+
+  private singletonCache: Map<Consturctor, unknown> = new Map()
+
+  singleton<C1 extends Consturctor>(
+    GivenClass: C1,
+    factory: (container: ServiceContainer) => InstanceType<C1>
+  ): void {
+    const create = this.create
+
+    this.create = <C2 extends Consturctor>(
+      InputClass: C1 | C2
+    ): InstanceType<C2> => {
+      if (InputClass === GivenClass) {
+        const found = this.singletonCache.get(InputClass)
+        if (found !== undefined) return found as any
+        const instance = factory(this)
+        this.singletonCache.set(InputClass, instance)
+        return instance as any
+      } else {
+        return create(InputClass) as any
+      }
     }
   }
 
