@@ -1,4 +1,3 @@
-import process from "process"
 import * as ut from "../ut"
 
 export async function test(
