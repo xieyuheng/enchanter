@@ -2,7 +2,7 @@ import { ServiceProvider } from "../service-provider"
 import * as Loggers from "../loggers"
 import { Logger } from "../logger"
 
-type Consturctor = abstract new(...args: Array<any>) => any
+type Consturctor = abstract new (...args: Array<any>) => any
 
 export class ServiceContainer {
   create<C extends Consturctor>(inputClass: C): InstanceType<C> {
@@ -56,14 +56,24 @@ export class ServiceContainer {
     const logger = opts?.logger || new Loggers.SilentLogger()
 
     for (const provider of providers) {
-      logger.info({ tag: "register", msg: `${provider.constructor.name}` })
+      logger.info({ tag: "register", msg: `[${provider.constructor.name}]` })
       await provider.register(this)
     }
 
     for (const provider of providers) {
       if (provider.boot) {
-        logger.info({ tag: "boot", msg: `${provider.constructor.name}` })
+        const t0 = Date.now()
+        logger.info({
+          tag: "boot",
+          msg: `[${provider.constructor.name}] start`,
+        })
         await provider.boot(this)
+        const t1 = Date.now()
+        logger.info({
+          tag: "boot",
+          msg: `[${provider.constructor.name}] finished`,
+          elapse: t1 - t0,
+        })
       }
     }
   }
