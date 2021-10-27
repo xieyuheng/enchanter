@@ -9,9 +9,11 @@ export class PrettyLogger extends Logger {
 
     s += this.formatTime(new Date()) + " "
     s += this.formatLevel(level) + " "
-    if (elapse !== undefined) s += this.formatElapse(elapse) + " "
+
     if (tag) s += this.formatTag(tag) + " "
     if (msg) s += `${msg}`
+    if (elapse !== undefined) s += " " + this.formatElapse(elapse)
+
     s += "\n"
 
     for (const [key, value] of Object.entries(opts)) {
