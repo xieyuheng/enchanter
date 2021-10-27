@@ -5,6 +5,8 @@ import { Logger } from "../logger"
 type Consturctor = abstract new (...args: Array<any>) => any
 
 export class ServiceContainer {
+  logger: Logger = new Loggers.PrettyLogger()
+
   create<C extends Consturctor>(inputClass: C): InstanceType<C> {
     throw new Error(`I can not resolve class: ${inputClass.name}`)
   }
@@ -49,27 +51,25 @@ export class ServiceContainer {
     }
   }
 
-  async bootstrap(
-    providers: Array<ServiceProvider>,
-    opts?: { logger?: Logger }
-  ): Promise<void> {
-    const logger = opts?.logger || new Loggers.SilentLogger()
-
+  async bootstrap(providers: Array<ServiceProvider>): Promise<void> {
     for (const provider of providers) {
-      logger.info({ tag: "register", msg: `[${provider.constructor.name}]` })
+      this.logger.info({
+        tag: "register",
+        msg: `[${provider.constructor.name}]`,
+      })
       await provider.register(this)
     }
 
     for (const provider of providers) {
       if (provider.boot) {
         const t0 = Date.now()
-        logger.info({
+        this.logger.info({
           tag: "boot",
           msg: `[${provider.constructor.name}] start`,
         })
         await provider.boot(this)
         const t1 = Date.now()
-        logger.info({
+        this.logger.info({
           tag: "boot",
           msg: `[${provider.constructor.name}] finished`,
           elapse: t1 - t0,
