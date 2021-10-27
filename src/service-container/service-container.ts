@@ -2,10 +2,7 @@ import { ServiceProvider } from "../service-provider"
 import * as Loggers from "../loggers"
 import { Logger } from "../logger"
 
-type Consturctor = {
-  new (...args: Array<any>): any
-  name: string
-}
+type Consturctor = abstract new(...args: Array<any>) => any
 
 export class ServiceContainer {
   create<C extends Consturctor>(inputClass: C): InstanceType<C> {
