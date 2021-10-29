@@ -53,7 +53,8 @@ export class PrettyLogger extends Logger {
 
   private formatProperty(key: string, value: any): string {
     const k = ut.colors.italic(ut.colors.yellow(key))
-    const v = JSON.stringify(value)
+    const j = JSON.stringify(value, null, 2)
+    const v = ut.indent(j, "  ").trim()
     return `  ${k}: ${v}`
   }
 }
