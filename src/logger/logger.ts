@@ -1,9 +1,11 @@
-export type LogOptions = {
-  level: string
-  elapse?: number
-  tag?: string
-  msg?: string
-}
+export type LogOptions =
+  | {
+      level: string
+      elapse?: number
+      tag?: string
+      msg?: string
+    }
+  | Record<string, any>
 
 export abstract class Logger {
   abstract log(opts: LogOptions): void
