@@ -14,7 +14,7 @@ Enchanter is web (and console) application framework with powerful spells! 🪄
 ## Install
 
 ```
-npm i -g @xieyuheng/enchanter
+npm i -g @enchanterjs/enchanter
 ```
 
 ## Development
