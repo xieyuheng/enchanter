@@ -14,11 +14,17 @@ export class GitPath {
   }
 
   encode(): string {
+    let s = this.repo
+
     if (this.host) {
-      return `${this.repo}@${this.host}/-/${this.path}`
-    } else {
-      return `${this.repo}/-/${this.path}`
+      s += `@${this.host}`
     }
+
+    if (this.path) {
+      s += `/-/${this.path}`
+    }
+
+    return s
   }
 
   static decode(str: string): GitPath {
