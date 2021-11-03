@@ -14,23 +14,17 @@ export class GitPath {
     this.path = opts.path || ""
   }
 
-  private format(): string {
-    return JSON.stringify([this.host, this.repo, this.path])
-  }
-
-  private static parse(
-    str: string
-  ): [host: string, repo: string, path: string] {
-    const [host, repo, path] = JSON.parse(str)
-    return [host, repo, path]
-  }
-
   encode(): string {
-    return Base64.encodeURI(this.format())
+    if (this.host) {
+      return `${this.repo}@${this.host}/-/${this.path}`
+    } else {
+      return `${this.repo}/-/${this.path}`
+    }
   }
 
   static decode(str: string): GitPath {
-    const [host, repo, path] = this.parse(Base64.decode(str))
+    const [repo_and_host, path] = str.split("/-/")
+    const [repo, host] = repo_and_host.split("@")
     return new GitPath({ host, repo, path })
   }
 
