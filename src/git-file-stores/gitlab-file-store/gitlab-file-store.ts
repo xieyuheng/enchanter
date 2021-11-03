@@ -49,7 +49,9 @@ export class GitLabFileStore extends GitFileStore {
 
   cd(subdir: string): GitLabFileStore {
     return new GitLabFileStore(this.path, {
-      dir: Path.normalize(`${this.dir}/${subdir}`),
+      dir: this.dir
+        ? Path.normalize(`${this.dir}/${subdir}`)
+        : Path.normalize(subdir),
       host: this.host,
       token: this.token,
     })
