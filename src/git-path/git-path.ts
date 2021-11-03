@@ -1,4 +1,3 @@
-import { Base64 } from "js-base64"
 import * as GitFileStores from "../git-file-stores"
 import { GitFileStore } from "../git-file-store"
 import Path from "path"
