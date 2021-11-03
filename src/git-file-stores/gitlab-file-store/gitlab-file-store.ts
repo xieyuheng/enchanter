@@ -48,12 +48,16 @@ export class GitLabFileStore extends GitFileStore {
   }
 
   cd(subdir: string): GitLabFileStore {
+    let dir = this.dir
+      ? Path.normalize(`${this.dir}/${subdir}`)
+      : Path.normalize(subdir)
+
+    if (dir === ".") {
+      dir = ""
+    }
+
     return new GitLabFileStore(this.path, {
-      dir: normalizeDir(
-        this.dir
-          ? Path.normalize(`${this.dir}/${subdir}`)
-          : Path.normalize(subdir)
-      ),
+      dir,
       host: this.host,
       token: this.token,
     })
@@ -112,12 +116,10 @@ export class GitLabFileStore extends GitFileStore {
 
 // NOTE Examples:
 //   "" => ""
-//   "." => ""
 //   "a" => "a/"
 //   "a/b" => "a/b/"
 function normalizeDir(dir: string): string {
   if (dir === "") return ""
-  if (dir === ".") return ""
   if (dir.startsWith("/")) return normalizeDir(dir.slice(1))
   if (dir.endsWith("//")) return normalizeDir(dir.slice(0, dir.length - 1))
   if (!dir.endsWith("/")) return dir + "/"
