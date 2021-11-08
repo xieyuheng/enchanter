@@ -18,8 +18,10 @@ export class PrettyLogger extends Logger {
 
     for (const [key, value] of Object.entries(opts)) {
       if (!["level", "tag", "msg", "elapse"].includes(key)) {
-        s += this.formatProperty(key, value)
-        s += "\n"
+        if (value !== undefined) {
+          s += this.formatProperty(key, value)
+          s += "\n"
+        }
       }
     }
 
