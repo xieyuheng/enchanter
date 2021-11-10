@@ -1,6 +1,6 @@
 {
   "name": "@enchanterjs/enchanter",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "repository": "github:enchanterjs/enchanter",
   "files": [
     "lib"
