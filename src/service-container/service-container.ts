@@ -2,22 +2,22 @@ import { ServiceProvider } from "../service-provider"
 import * as Loggers from "../loggers"
 import { Logger } from "../logger"
 
-type Consturctor = abstract new (...args: Array<any>) => any
+type Constructor = abstract new (...args: Array<any>) => any
 
 export class ServiceContainer {
   logger: Logger = new Loggers.PrettyLogger()
 
-  create<C extends Consturctor>(inputClass: C): InstanceType<C> {
+  create<C extends Constructor>(inputClass: C): InstanceType<C> {
     throw new Error(`I can not resolve class: ${inputClass.name}`)
   }
 
-  bind<C1 extends Consturctor>(
+  bind<C1 extends Constructor>(
     GivenClass: C1,
     factory: (container: ServiceContainer) => InstanceType<C1>
   ): void {
     const create = this.create
 
-    this.create = <C2 extends Consturctor>(
+    this.create = <C2 extends Constructor>(
       InputClass: C1 | C2
     ): InstanceType<C2> => {
       if (InputClass === GivenClass) {
@@ -28,15 +28,15 @@ export class ServiceContainer {
     }
   }
 
-  private singletonCache: Map<Consturctor, unknown> = new Map()
+  private singletonCache: Map<Constructor, unknown> = new Map()
 
-  singleton<C1 extends Consturctor>(
+  singleton<C1 extends Constructor>(
     GivenClass: C1,
     factory: (container: ServiceContainer) => InstanceType<C1>
   ): void {
     const create = this.create
 
-    this.create = <C2 extends Consturctor>(
+    this.create = <C2 extends Constructor>(
       InputClass: C1 | C2
     ): InstanceType<C2> => {
       if (InputClass === GivenClass) {
