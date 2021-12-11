@@ -85,10 +85,9 @@ export class GitPath {
   static fromURL(input: string): GitPath {
     const { host, pathname } = new URL(input)
 
-    const middle =
-      host === "github.com" || host === "gitee.com"
-        ? "/tree/master/"
-        : "/-/tree/master/" // NOTE for gitlab
+    const middle = pathname.includes("/-/")
+      ? "/-/tree/master/" // NOTE for gitlab
+      : "/tree/master/" // NOTE for gihub and some version of gitlab
 
     const [repo, path] = pathname
       .slice(1)
