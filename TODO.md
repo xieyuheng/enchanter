@@ -1,3 +1,7 @@
+- rename `GitPath` `GitLink`
+
+- `GitLink` -- `<host>/<path>[@<version>]` -- instead of `/<path>/@<host>`
+
 - `FileStore` should have `resolve` -- not only `LocalFileStore`
 
 - sort file name by given weight on chars
