@@ -1,8 +1,8 @@
-import { Repl, ReplEvent, ReplEventHandler } from "../../repl"
+import Readline from "readline"
 import { FileStore } from "../../file-store"
+import { Repl, ReplEvent, ReplEventHandler } from "../../repl"
 import { Command } from "./command"
 import * as Commands from "./commands"
-import Readline from "readline"
 
 export class ReadlineRepl extends Repl {
   dir: string

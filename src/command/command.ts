@@ -1,5 +1,5 @@
-import fs from "fs"
 import { Schema } from "@xieyuheng/ty"
+import fs from "fs"
 import { CommandRunner } from "../command-runner"
 import * as ut from "../ut"
 

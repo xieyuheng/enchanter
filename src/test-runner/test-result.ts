@@ -1,6 +1,6 @@
-import * as Loggers from "../loggers"
-import Path from "path"
 import fs from "fs"
+import Path from "path"
+import * as Loggers from "../loggers"
 import * as ut from "../ut"
 
 export class TestResult {

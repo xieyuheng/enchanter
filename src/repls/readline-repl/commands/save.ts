@@ -1,6 +1,6 @@
+import fs from "fs"
 import { Command } from "../command"
 import { ReadlineRepl } from "../readline-repl"
-import fs from "fs"
 
 export class Save extends Command {
   name = "save"

@@ -1,6 +1,6 @@
-import { GiteeFileStore } from "../gitee-file-store"
 import ty from "@xieyuheng/ty"
 import * as ut from "../../ut"
+import { GiteeFileStore } from "../gitee-file-store"
 
 ut.test("keys", async () => {
   const files = new GiteeFileStore("xyheme/the-little-typer-exercises")

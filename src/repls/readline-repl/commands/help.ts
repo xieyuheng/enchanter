@@ -1,6 +1,6 @@
+import * as ut from "../../../ut"
 import { Command } from "../command"
 import { ReadlineRepl } from "../readline-repl"
-import * as ut from "../../../ut"
 
 export class Help extends Command {
   name = "help"

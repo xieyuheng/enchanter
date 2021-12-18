@@ -1,13 +1,11 @@
+import ty from "@xieyuheng/ty"
+import { paramCase } from "change-case"
+import fastGlob from "fast-glob"
+import app from "../../app"
 import { Command } from "../../command"
 import { CommandRunner } from "../../command-runner"
-import * as Commands from "../commands"
 import { TestRunner } from "../../test-runner"
-import app from "../../app"
 import * as ut from "../../ut"
-import Path from "path"
-import ty from "@xieyuheng/ty"
-import fastGlob from "fast-glob"
-import { paramCase } from "change-case"
 
 type Args = { program: string; glob: string }
 type Opts = { extern?: string; exclude?: string }

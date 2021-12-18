@@ -1,8 +1,8 @@
-import { CommandRunner } from "../command-runner"
-import { Command } from "../command"
-import yargsParser from "yargs-parser"
-import { Schema, Errors } from "@xieyuheng/ty"
+import { Errors, Schema } from "@xieyuheng/ty"
 import Path from "path"
+import yargsParser from "yargs-parser"
+import { Command } from "../command"
+import { CommandRunner } from "../command-runner"
 
 export class CommonCommandRunner extends CommandRunner {
   commands: Array<Command<any, any>>

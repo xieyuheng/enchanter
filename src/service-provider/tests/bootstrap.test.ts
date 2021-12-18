@@ -1,7 +1,7 @@
+import * as ut from "../../ut"
 import { App } from "./example-app"
 import * as Providers from "./example-providers"
 import { Logger, Resource } from "./example-providers"
-import * as ut from "../../ut"
 
 const app = new App()
 

@@ -1,8 +1,8 @@
-import * as GitFileStores from "../git-file-stores"
-import { GitFileStore } from "../git-file-store"
 import Path from "path"
+import { GitFileStore } from "../git-file-store"
+import * as GitFileStores from "../git-file-stores"
 
-export class GitPath {
+export class GitLink {
   host: string
   repo: string
   path: string
@@ -27,10 +27,10 @@ export class GitPath {
     return s
   }
 
-  static decode(str: string): GitPath {
+  static decode(str: string): GitLink {
     const [repo_and_host, path] = str.split("/-/")
     const [repo, host] = repo_and_host.split("@")
-    return new GitPath({ host, repo, path })
+    return new GitLink({ host, repo, path })
   }
 
   formatURL(): string {
@@ -50,17 +50,17 @@ export class GitPath {
     }
   }
 
-  upward(): GitPath {
+  upward(): GitLink {
     const { host, repo, path } = this
     const dirname = Path.dirname(path)
     const dir = dirname === "." ? "" : dirname
-    return new GitPath({ host, repo, path: dir })
+    return new GitLink({ host, repo, path: dir })
   }
 
-  resolve(path: string): GitPath {
+  resolve(path: string): GitLink {
     const prefix = "placeholder:/"
 
-    return new GitPath({
+    return new GitLink({
       host: this.host,
       repo: this.repo,
       path: new URL(path, `${prefix}${this.path}`).href.slice(prefix.length),
@@ -82,7 +82,7 @@ export class GitPath {
     }
   }
 
-  static fromURL(input: string): GitPath {
+  static fromURL(input: string): GitLink {
     const { host, pathname } = new URL(input)
 
     const middle = pathname.includes("/-/")
@@ -94,6 +94,6 @@ export class GitPath {
       .replace("/blob/master/", "/tree/master/")
       .split(middle)
 
-    return new GitPath({ host, repo, path })
+    return new GitLink({ host, repo, path })
   }
 }

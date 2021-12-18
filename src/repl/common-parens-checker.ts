@@ -1,5 +1,5 @@
-import { ParensChecker } from "./parens-checker"
 import pt from "@cicada-lang/partech"
+import { ParensChecker } from "./parens-checker"
 
 export class CommonParensChecker extends ParensChecker {
   depth(text: string): number {

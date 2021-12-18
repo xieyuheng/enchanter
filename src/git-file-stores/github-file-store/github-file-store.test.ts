@@ -1,6 +1,6 @@
-import { GitHubFileStore } from "../github-file-store"
 import ty from "@xieyuheng/ty"
 import * as ut from "../../ut"
+import { GitHubFileStore } from "../github-file-store"
 
 ut.test("keys", async () => {
   const files = new GitHubFileStore("xieyuheng/the-little-typer-exercises")

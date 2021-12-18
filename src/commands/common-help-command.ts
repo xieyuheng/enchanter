@@ -1,7 +1,7 @@
+import ty from "@xieyuheng/ty"
 import { Command } from "../command"
 import { CommandRunner } from "../command-runner"
 import * as ut from "../ut"
-import ty from "@xieyuheng/ty"
 
 type Args = { name?: string }
 

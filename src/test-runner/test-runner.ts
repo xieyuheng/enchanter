@@ -1,7 +1,7 @@
-import { TestResult } from "../test-runner"
+import child_process from "child_process"
 import os from "os"
 import util from "util"
-import child_process from "child_process"
+import { TestResult } from "../test-runner"
 const exec = util.promisify(child_process.exec)
 
 export class TestRunner {

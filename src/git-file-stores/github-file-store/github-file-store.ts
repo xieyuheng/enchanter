@@ -1,8 +1,7 @@
-import { GitFileStore } from "../../git-file-store"
 import { Octokit } from "@octokit/rest"
 import { Base64 } from "js-base64"
-import ty from "@xieyuheng/ty"
 import Path from "path"
+import { GitFileStore } from "../../git-file-store"
 
 export class GitHubFileStore extends GitFileStore {
   path: string

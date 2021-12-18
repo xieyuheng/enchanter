@@ -1,6 +1,4 @@
-- rename `GitPath` `GitLink`
-
-- `GitLink` -- `<host>/<path>[@<version>]` -- instead of `/<path>/@<host>`
+- `GitLink` -- `<host>/<repo>[@<version>]/-/<path>` -- instead of `<repo>/@<host>/-/<path>`
 
 - `FileStore` should have `resolve` -- not only `LocalFileStore`
 

@@ -1,9 +1,8 @@
+import ty from "@xieyuheng/ty"
+import app from "../../app"
 import { Command } from "../../command"
 import { CommandRunner } from "../../command-runner"
 import { CommonHelpCommand } from "../../commands"
-import * as Commands from "../commands"
-import app from "../../app"
-import ty from "@xieyuheng/ty"
 
 type Args = {}
 type Opts = { help?: boolean; version?: boolean }

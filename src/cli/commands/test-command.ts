@@ -1,11 +1,10 @@
-import { Command } from "../../command"
-import { CommandRunner } from "../../command-runner"
-import * as Commands from "../commands"
-import { TestRunner } from "../../test-runner"
-import app from "../../app"
-import * as ut from "../../ut"
 import ty from "@xieyuheng/ty"
 import fastGlob from "fast-glob"
+import app from "../../app"
+import { Command } from "../../command"
+import { CommandRunner } from "../../command-runner"
+import { TestRunner } from "../../test-runner"
+import * as ut from "../../ut"
 
 type Args = { program: string; glob: string }
 type Opts = { exclude?: string }

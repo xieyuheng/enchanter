@@ -1,6 +1,6 @@
-import { ServiceProvider } from "../service-provider"
-import * as Loggers from "../loggers"
 import { Logger } from "../logger"
+import * as Loggers from "../loggers"
+import { ServiceProvider } from "../service-provider"
 
 type Constructor = abstract new (...args: Array<any>) => any
 
