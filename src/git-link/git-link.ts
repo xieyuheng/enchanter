@@ -5,11 +5,18 @@ import * as GitFileStores from "../git-file-stores"
 export class GitLink {
   host: string
   repo: string
+  tag: string
   path: string
 
-  constructor(opts: { host: string; repo: string; path?: string }) {
+  constructor(opts: {
+    host: string
+    repo: string
+    tag?: string
+    path?: string
+  }) {
     this.host = opts.host
     this.repo = opts.repo
+    this.tag = opts.tag || ""
     this.path = opts.path || ""
   }
 
@@ -18,6 +25,10 @@ export class GitLink {
 
     if (this.host) {
       s = `${this.host}/` + s
+    }
+
+    if (this.tag) {
+      s = s + `@${this.tag}`
     }
 
     if (this.path) {
@@ -29,8 +40,10 @@ export class GitLink {
 
   static decode(str: string): GitLink {
     const [host_and_repo, path] = str.split("/-/")
-    const [host, ...repo] = host_and_repo.split("/")
-    return new GitLink({ host, repo: repo.join("/"), path })
+    const [host, ...rest] = host_and_repo.split("/")
+    const repo_and_tag = rest.join("/")
+    const [repo, tag] = repo_and_tag.split("@")
+    return new GitLink({ host, repo, tag, path })
   }
 
   formatURL(): string {
