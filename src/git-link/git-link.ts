@@ -17,20 +17,20 @@ export class GitLink {
     let s = this.repo
 
     if (this.host) {
-      s += `@${this.host}`
+      s = `${this.host}/` + s
     }
 
     if (this.path) {
-      s += `/-/${this.path}`
+      s = s + `/-/${this.path}`
     }
 
     return s
   }
 
   static decode(str: string): GitLink {
-    const [repo_and_host, path] = str.split("/-/")
-    const [repo, host] = repo_and_host.split("@")
-    return new GitLink({ host, repo, path })
+    const [host_and_repo, path] = str.split("/-/")
+    const [host, ...repo] = host_and_repo.split("/")
+    return new GitLink({ host, repo: repo.join("/"), path })
   }
 
   formatURL(): string {

@@ -1,5 +1,3 @@
-- `GitLink` -- `<host>/<repo>[@<version>]/-/<path>` -- instead of `<repo>/@<host>/-/<path>`
-
 - `FileStore` should have `resolve` -- not only `LocalFileStore`
 
 - sort file name by given weight on chars
