@@ -4,18 +4,18 @@ import * as GitFileStores from "../git-file-stores"
 
 export class GitLink {
   host: string
-  repo: string
+  name: string
   version: string
   path: string
 
   constructor(opts: {
     host: string
-    repo: string
+    name: string
     version?: string
     path?: string
   }) {
     this.host = opts.host
-    this.repo = opts.repo
+    this.name = opts.name
     this.version = opts.version || ""
     this.path = opts.path || ""
   }
@@ -27,8 +27,8 @@ export class GitLink {
       s += `${this.host}`
     }
 
-    if (this.repo) {
-      s += `/${this.repo}`
+    if (this.name) {
+      s += `/${this.name}`
     }
 
     if (this.version) {
@@ -43,35 +43,35 @@ export class GitLink {
   }
 
   static decode(str: string): GitLink {
-    const [host_and_repo, path] = str.split("/-/")
-    const [host, ...rest] = host_and_repo.split("/")
-    const repo_and_version = rest.join("/")
-    const [repo, version] = repo_and_version.split("@")
-    return new GitLink({ host, repo, version, path })
+    const [host_and_name, path] = str.split("/-/")
+    const [host, ...rest] = host_and_name.split("/")
+    const name_and_version = rest.join("/")
+    const [name, version] = name_and_version.split("@")
+    return new GitLink({ host, name, version, path })
   }
 
   formatURL(): string {
     switch (this.host) {
       case "github.com":
         return this.path
-          ? `https://github.com/${this.repo}/tree/master/${this.path}`
-          : `https://github.com/${this.repo}`
+          ? `https://github.com/${this.name}/tree/master/${this.path}`
+          : `https://github.com/${this.name}`
       case "gitlab.com":
         return this.path
-          ? `https://gitlab.com/${this.repo}/-/tree/master/${this.path}`
-          : `https://gitlab.com/${this.repo}`
+          ? `https://gitlab.com/${this.name}/-/tree/master/${this.path}`
+          : `https://gitlab.com/${this.name}`
       default:
         return this.path
-          ? `https://${this.host}/${this.repo}/-/tree/master/${this.path}`
-          : `https://${this.host}/${this.repo}`
+          ? `https://${this.host}/${this.name}/-/tree/master/${this.path}`
+          : `https://${this.host}/${this.name}`
     }
   }
 
   upward(): GitLink {
-    const { host, repo, path } = this
+    const { host, name, path } = this
     const dirname = Path.dirname(path)
     const dir = dirname === "." ? "" : dirname
-    return new GitLink({ host, repo, path: dir })
+    return new GitLink({ host, name, path: dir })
   }
 
   resolve(path: string): GitLink {
@@ -79,23 +79,23 @@ export class GitLink {
 
     return new GitLink({
       host: this.host,
-      repo: this.repo,
+      name: this.name,
       path: new URL(path, `${prefix}${this.path}`).href.slice(prefix.length),
     })
   }
 
   createGitFileStore(): GitFileStore {
-    const { host, repo, path: dir } = this
+    const { host, name, path: dir } = this
 
     switch (host) {
       case "github.com":
-        return new GitFileStores.GitHubFileStore(repo, { dir })
+        return new GitFileStores.GitHubFileStore(name, { dir })
       case "gitlab.com":
-        return new GitFileStores.GitLabFileStore(repo, { dir })
+        return new GitFileStores.GitLabFileStore(name, { dir })
       case "gitee.com":
-        return new GitFileStores.GiteeFileStore(repo, { dir })
+        return new GitFileStores.GiteeFileStore(name, { dir })
       default:
-        return new GitFileStores.GitLabFileStore(repo, { dir, host })
+        return new GitFileStores.GitLabFileStore(name, { dir, host })
     }
   }
 
@@ -106,11 +106,11 @@ export class GitLink {
       ? "/-/tree/master/" // NOTE for gitlab
       : "/tree/master/" // NOTE for gihub and some version of gitlab
 
-    const [repo, path] = pathname
+    const [name, path] = pathname
       .slice(1)
       .replace("/blob/master/", "/tree/master/")
       .split(middle)
 
-    return new GitLink({ host, repo, path })
+    return new GitLink({ host, name, path })
   }
 }
