@@ -19,20 +19,14 @@ import * as ut from "./index"
 }
 
 {
-  function f(x: number): string {
-    return `x: ${x}`
-  }
-
+  const f = (x: number) => `x: ${x}`
   const x = [f, { x: "x", y: "y" }, new Set([1, 2, [1, 2, { x: "x", y: "y" }]])]
   const y = [f, { x: "x", y: "y" }, new Set([1, 2, [1, 2, { x: "x", y: "y" }]])]
   ut.assertEqual(x, y)
 }
 
 {
-  function f(x: number): (y: number) => string {
-    return (y: number) => `x: ${x}, y: ${y}`
-  }
-
+  const f = (x: number) => (y: number) => `x: ${x}, y: ${y}`
   const x = f(1)
   const y = f(1)
   ut.assertNotEqual(x, y)
