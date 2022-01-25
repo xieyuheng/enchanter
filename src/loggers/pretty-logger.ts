@@ -1,5 +1,7 @@
 import { Logger, LogOptions } from "../logger"
-import * as ut from "../ut"
+import { colors } from "../ut/colors"
+import { indent } from "../ut/indent"
+import { formatTime } from "../ut/format-date"
 
 export class PrettyLogger extends Logger {
   log(opts: LogOptions): void {
@@ -29,34 +31,34 @@ export class PrettyLogger extends Logger {
   }
 
   private formatLevel(level: string): string {
-    const lv = ut.colors.bold(level.toUpperCase())
+    const lv = colors.bold(level.toUpperCase())
 
     if (level === "info") {
-      return ut.colors.blue(lv)
+      return colors.blue(lv)
     } else if (level === "error") {
-      return ut.colors.red(lv)
+      return colors.red(lv)
     } else {
       return lv
     }
   }
 
   private formatTime(t: Date): string {
-    const time = ut.formatTime(new Date(), { withMilliseconds: true })
-    return ut.colors.yellow(`[${time}]`)
+    const time = formatTime(new Date(), { withMilliseconds: true })
+    return colors.yellow(`[${time}]`)
   }
 
   private formatElapse(elapse: number): string {
-    return ut.colors.yellow(`<${elapse}ms>`)
+    return colors.yellow(`<${elapse}ms>`)
   }
 
   private formatTag(tag: string): string {
-    return ut.colors.bold(`(${tag})`)
+    return colors.bold(`(${tag})`)
   }
 
   private formatProperty(key: string, value: any): string {
-    const k = ut.colors.italic(ut.colors.yellow(key))
+    const k = colors.italic(colors.yellow(key))
     const j = JSON.stringify(value, null, 2)
-    const v = ut.indent(j, "  ").trim()
+    const v = indent(j, "  ").trim()
     return `  ${k}: ${v}`
   }
 }
