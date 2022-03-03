@@ -5,6 +5,14 @@ import { Command } from "../command"
 import { CommandRunner } from "../command-runner"
 import { ServiceContainer } from "../service-container"
 
+export function createCommandRunner(opts: {
+  app?: ServiceContainer
+  commands: Array<Command<any, any>>
+  defaultCommand?: Command<any, any>
+}): CommonCommandRunner {
+  return new CommonCommandRunner(opts)
+}
+
 export class CommonCommandRunner extends CommandRunner {
   app: ServiceContainer
 
