@@ -51,29 +51,42 @@ export class ServiceContainer {
     }
   }
 
-  async bootstrap(providers: Array<ServiceProvider>): Promise<void> {
+  async bootstrap(
+    providers: Array<ServiceProvider>,
+    opts: { silent?: boolean } = {}
+  ): Promise<void> {
     for (const provider of providers) {
-      this.logger.info({
-        tag: "register",
-        msg: `[${provider.constructor.name}]`,
-      })
+      if (!opts.silent) {
+        this.logger.info({
+          tag: "register",
+          msg: `[${provider.constructor.name}]`,
+        })
+      }
+
       await provider.register(this)
     }
 
     for (const provider of providers) {
       if (provider.boot) {
         const t0 = Date.now()
-        this.logger.info({
-          tag: "boot",
-          msg: `[${provider.constructor.name}] start`,
-        })
+
+        if (!opts.silent) {
+          this.logger.info({
+            tag: "boot",
+            msg: `[${provider.constructor.name}] start`,
+          })
+        }
+
         await provider.boot(this)
         const t1 = Date.now()
-        this.logger.info({
-          tag: "boot",
-          msg: `[${provider.constructor.name}] finished`,
-          elapse: t1 - t0,
-        })
+
+        if (!opts.silent) {
+          this.logger.info({
+            tag: "boot",
+            msg: `[${provider.constructor.name}] finished`,
+            elapse: t1 - t0,
+          })
+        }
       }
     }
   }
