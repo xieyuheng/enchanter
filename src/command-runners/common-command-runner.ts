@@ -3,16 +3,21 @@ import Path from "path"
 import yargsParser from "yargs-parser"
 import { Command } from "../command"
 import { CommandRunner } from "../command-runner"
+import { ServiceContainer } from "../service-container"
 
 export class CommonCommandRunner extends CommandRunner {
+  app: ServiceContainer
+
   commands: Array<Command<any, any>>
   defaultCommand?: Command<any, any>
 
   constructor(opts: {
+    app?: ServiceContainer
     commands: Array<Command<any, any>>
     defaultCommand?: Command<any, any>
   }) {
     super()
+    this.app = opts.app ?? new ServiceContainer()
     this.commands = opts.commands
     this.defaultCommand = opts.defaultCommand
   }
